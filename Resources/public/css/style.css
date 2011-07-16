@@ -1,0 +1,31 @@
+html, .ui-widget, .ui-accordion-header {
+    font-family: Arial, Georgia, serif;
+    font-size: 14px;
+}
+
+.jobdata li, lh {
+    clear: both;
+    display: inline-block;
+    padding-left: 2px;
+    padding-right: 35px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    overflow: hidden;
+}
+
+.jobdata lh {
+    padding-right: 2px;
+    font-weight: bold;
+}
+
+.emptyqueue {
+    padding-left: 20px;
+}
+
+#schedulequeue h2,
+#activequeue h2,
+#retryqueue h2 {
+    padding-left: 25px;
+    padding-top: 10px;
+    height: 30px;
+}

@@ -1,0 +1,130 @@
+ {% extends 'JobqueueBundle::layout.html.twig' %}
+ {% block title "Jobqueue Status Control Center" %}
+ {% block body %}
+ 
+ <script>
+	$(function() {
+	    $( ".section_accordion" ).accordion({
+			collapsible: true,
+			active: false,
+			autoHeight: false,
+			header: 'h2'
+		});
+		
+		$( ".accordion" ).accordion({
+			collapsible: true,
+			active: false,
+			autoHeight: false,
+			header: 'h3'
+		});
+	});
+ </script>
+	
+ <section id="jobqueues" class="section_accordion" />
+     <h1>Jobqueue Status</h1>
+     <article id="schedulequeue">
+     <h2>Schedule Queue</h2>
+        {% if scheduleQueue.totalJobs %}
+            <ul class="accordion">
+            {% for job in scheduleQueue %}
+                <li>
+                    <h3></span><a href="#"> {{ job.name }} </a></h3>
+                    <ul class="jobdata">
+                        <lh> Type </lh>
+                        <li> {{ job.type }} </li>
+                        <lh> Schedule </lh>
+                        <li> {{ job.schedule }} </li>
+                        {% if job.lastRunDate is defined %}
+                            <lh> Last Run </lh>
+                            <li> {{ job.lastRunDate|date("m/d/Y") }} </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="emptyqueue"> No jobs found in queue </p>
+        {% endif %}
+    </article>
+    
+    <article id="activequeue">
+    <h2>Active Queue</h2>
+        {% if activeQueue.totalJobs %}
+            <ul class="accordion">
+            {% for job in activeQueue %}
+                <li>
+                    <h3></span><a href="#">Job #{{ job.adapter.id }} </a></h3>
+                    <ul class="jobdata">
+                        <lh> Type </lh>
+                        <li> {{ job.type }} </li>
+                        <lh> Schedule </lh>
+                        <li> {{ job.schedule }} </li>
+                        {% if job.lastRunDate is defined %}
+                            <lh> Last Run </lh>
+                            <li> {{ job.lastRunDate|date("m/d/Y") }} </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="emptyqueue"> No jobs found in queue </p>
+        {% endif %}
+    </article>
+
+    <article id="retryqueue">
+    <h2>Retry Queue</h2>
+        {% if retryQueue.totalJobs %}
+            <ul class="accordion">
+            {% for job in retryQueue %}
+                <li>
+                    <h3></span><a href="#">Job #{{ job.adapter.id }} </a></h3>
+                    <ul class="jobdata">
+                        <lh> Type </lh>
+                        <li> {{ job.type }} </li>
+                        <lh> Schedule </lh>
+                        <li> {{ job.schedule }} </li>
+                        {% if job.lastRunDate is defined %}
+                            <lh> Last Run </lh>
+                            <li> {{ job.lastRunDate|date("m/d/Y") }} </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="emptyqueue"> No jobs found in queue </p>
+        {% endif %}
+    </article>
+
+ </section>
+ <section id="History" />
+    <h1>Jobqueue History</h1>
+    <article id="jobhistory">
+    {% if history.totalEntries %}
+            <ul>
+            {% for entry in history %}
+                <li>
+                    <ul class="jobdata">
+                        <lh> Job id </lh>
+                        <li> {{ entry.jobId }} </li>
+                        <lh> Job Type </lh>
+                        <li> {{ entry.jobType }} </li>
+                        <lh> Status </lh>
+                        <li> {{ entry.status }} </li>
+                        <lh> Message </lh>
+                        <li> {{ entry.message }} </li>
+                        <lh> Job Schedule </lh>
+                        <li> {{ entry.jobSchedule }} </li>
+                        <lh> Timestamp </lh>
+                        <li> {{ entry.timestamp|date("m/d/Y") }} </li>
+                    </ul>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="emptyhistory"> No jobs found in history </p>
+        {% endif %}
+    </article>
+ </section>
+ {% endblock %}

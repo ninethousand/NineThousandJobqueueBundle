@@ -1,0 +1,4 @@
+<?php
+
+$_SERVER['KERNEL_DIR'] = '../../../../app';
+include ($_SERVER['KERNEL_DIR'].'/bootstrap.php.cache');
