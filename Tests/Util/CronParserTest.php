@@ -3,7 +3,7 @@
 namespace NineThousand\Bundle\NineThousandJobqueueBundle\Tests\Util;
 
 use \PHPUnit_Framework_TestCase;
-use NineThousand\Bundle\NineThousandJobqueueBundle\Util\CronParser;
+use NineThousand\Jobqueue\Util\CronParser;
 use \DateTime;
 
 /**

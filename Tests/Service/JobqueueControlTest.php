@@ -102,7 +102,7 @@ class JobqueueControlTest extends WebTestCase
         $this->container->get('jobqueue.control')->run();
         
         $result = array();
-        $repo = $em->getRepository('JobqueueBundle:Job');
+        $repo = $em->getRepository('NineThousandJobqueueBundle:Job');
         foreach ($this->data as $record) {
             if ($record->getSchedule() === NULL) {
                 array_push($result, $repo->findOneById($record->getId())->getStatus());

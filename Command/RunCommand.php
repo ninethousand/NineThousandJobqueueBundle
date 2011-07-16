@@ -23,7 +23,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->container->get('jobqueue.control')->run();
+        $this->getContainer()->get('jobqueue.control')->run();
     }
 
 }

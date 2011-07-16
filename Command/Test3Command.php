@@ -25,7 +25,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->container->get('logger')->debug('Command 3 Successfully Ran.');
+        $this->getContainer()->get('logger')->debug('Command 3 Successfully Ran.');
     }
 
 }

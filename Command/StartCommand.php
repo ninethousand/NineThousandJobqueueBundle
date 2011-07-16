@@ -26,7 +26,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
-        $options = $this->container->getParameter('jobqueue.daemon.options');
+        $options = $this->getContainer()->getParameter('jobqueue.daemon.options');
         $daemon = new Daemon($options);
         
         $daemon->start();
