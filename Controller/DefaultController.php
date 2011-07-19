@@ -4,7 +4,7 @@ namespace NineThousand\Bundle\NineThousandJobqueueBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use NineThousand\Bundle\NineThousandJobqueueBundle\Model\History\StandardHistory as History;
+use NineThousand\Jobqueue\History\StandardHistory as History;
 
 class DefaultController extends Controller
 {
@@ -12,7 +12,7 @@ class DefaultController extends Controller
     {
         $queueControl = $this->get('jobqueue.control');
         
-        return $this->render('JobqueueBundle:Default:index.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:Default:index.html.twig', array(
             'activeQueue'    => $queueControl->getActiveQueue(),
             'retryQueue'     => $queueControl->getRetryQueue(),
             'scheduleQueue'  => $queueControl->getScheduleQueue(),

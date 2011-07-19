@@ -5,25 +5,25 @@
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="ninethousand_jobqueue_home" pattern="/">
-        <default key="_controller">JobqueueBundle:Default:index</default>
+        <default key="_controller">NineThousandJobqueueBundle:Default:index</default>
     </route>
     
     <route id="ninethousand_jobqueue_job" pattern="/job/{id}">
-        <default key="_controller">JobqueueBundle:Job:index</default>
+        <default key="_controller">NineThousandJobqueueBundle:Job:index</default>
     </route>
     
     <route id="ninethousand_jobqueue_job_ajax" pattern="/job/{id}.{_format}">
-        <default key="_controller">JobqueueBundle:Job:ajax</default>
+        <default key="_controller">NineThousandJobqueueBundle:Job:ajax</default>
         <default key="_format">json</default>
         <requirement key="_format">json</requirement>
     </route>
     
     <route id="ninethousand_jobqueue_queue" pattern="/queue/{slug}">
-        <default key="_controller">JobqueueBundle:Queue:index</default>
+        <default key="_controller">NineThousandJobqueueBundle:Queue:index</default>
     </route>
     
     <route id="ninethousand_jobqueue_job_ajax" pattern="/queue/{slug}.{_format}">
-        <default key="_controller">JobqueueBundle:Queue:ajax</default>
+        <default key="_controller">NineThousandJobqueueBundle:Queue:ajax</default>
         <default key="_format">json</default>
         <requirement key="_format">json</requirement>
     </route>

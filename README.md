@@ -58,7 +58,7 @@ app/config.yml
 
         #Job component configuration
         job:
-            class:  "NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job"
+            class:  "NineThousand\Jobqueue\Job\StandardJob"
 
         #adapter configuration includes job adapter and job controll mapping
         adapter:
@@ -72,6 +72,22 @@ app/config.yml
                 jobcontrol:
                     type_mapping:
                         SymfonyConsoleJobControl:   "NineThousand\Jobqueue\Vendor\Symfony2\Adapter\Job\Control\Symfony2ConsoleJobControl"
+                        
+### routing.yml ###
+Import the bundle routing into your projects routing config with your desired prefix:
+
+    ninethousand_jobqueue:
+        resource: "@NineThousandJobqueueBundle/Resources/config/routing.xml"
+        prefix:   /jobqueue
+        
+### initialize database ###
+#### doctrine ORM ####
+If you're using the doctrine configuration that's default to your project, it could be as simple as running a schema update from the command line:
+
+    jesse@picard:~/ninethousand.org$ php app/console doctrine:schema:update
+    
+#### other database adapters ####
+Since no other database adapters have been created yet, if you extend the data persistence layer, bear in mind that your tables or data structure will need to be initialized somehow.
 
 ## Usage ##
 
@@ -147,6 +163,7 @@ All Queues should implement PHPs \Iterator interface, so displaying the queue in
                 <p class="emptyqueue"> No jobs found in queue </p>
             {% endif %}
         </article>
+     </section>
 
 ### Command ###
 This bundle comes with a number of commands but the only truly important command is the Command\RunCommand.php script.
