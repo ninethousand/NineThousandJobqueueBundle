@@ -7,25 +7,9 @@
     <route id="ninethousand_jobqueue_home" pattern="/">
         <default key="_controller">NineThousandJobqueueBundle:Default:index</default>
     </route>
-    
-    <route id="ninethousand_jobqueue_job" pattern="/job/{id}">
-        <default key="_controller">NineThousandJobqueueBundle:Job:index</default>
-    </route>
-    
-    <route id="ninethousand_jobqueue_job_ajax" pattern="/job/{id}.{_format}">
-        <default key="_controller">NineThousandJobqueueBundle:Job:ajax</default>
-        <default key="_format">json</default>
-        <requirement key="_format">json</requirement>
-    </route>
-    
-    <route id="ninethousand_jobqueue_queue" pattern="/queue/{slug}">
-        <default key="_controller">NineThousandJobqueueBundle:Queue:index</default>
-    </route>
-    
-    <route id="ninethousand_jobqueue_job_ajax" pattern="/queue/{slug}.{_format}">
-        <default key="_controller">NineThousandJobqueueBundle:Queue:ajax</default>
-        <default key="_format">json</default>
-        <requirement key="_format">json</requirement>
-    </route>
 
+    <import resource="@NineThousandJobqueueBundle/Resources/config/routing/job.xml" prefix="/job" />
+    <import resource="@NineThousandJobqueueBundle/Resources/config/routing/arg.xml" prefix="/arg" />
+    <import resource="@NineThousandJobqueueBundle/Resources/config/routing/param.xml" prefix="/param" />
+    <import resource="@NineThousandJobqueueBundle/Resources/config/routing/tag.xml" prefix="/tag" />
 </routes>

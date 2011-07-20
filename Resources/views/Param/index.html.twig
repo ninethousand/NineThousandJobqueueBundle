@@ -1,0 +1,43 @@
+<h1>Param list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Job</th>
+            <th>Key</th>
+            <th>Value</th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('jobqueue_param_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.job }}</td>
+            <td>{{ entity.key }}</td>
+            <td>{{ entity.value }}</td>
+            <td>{{ entity.active }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('jobqueue_param_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('jobqueue_param_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('jobqueue_param_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

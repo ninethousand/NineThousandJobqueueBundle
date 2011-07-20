@@ -4,76 +4,76 @@ namespace NineThousand\Bundle\NineThousandJobqueueBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job;
-use NineThousand\Bundle\NineThousandJobqueueBundle\Form\JobType;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Tag;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Form\TagType;
 
 /**
- * Job controller.
+ * Tag controller.
  *
  */
-class JobController extends Controller
+class TagController extends Controller
 {
     /**
-     * Lists all Job entities.
+     * Lists all Tag entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('NineThousandJobqueueBundle:Job')->findAll();
+        $entities = $em->getRepository('NineThousandJobqueueBundle:Tag')->findAll();
 
-        return $this->render('NineThousandJobqueueBundle:Job:index.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:Tag:index.html.twig', array(
             'entities' => $entities
         ));
     }
 
     /**
-     * Finds and displays a Job entity.
+     * Finds and displays a Tag entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('NineThousandJobqueueBundle:Job')->find($id);
+        $entity = $em->getRepository('NineThousandJobqueueBundle:Tag')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Job entity.');
+            throw $this->createNotFoundException('Unable to find Tag entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('NineThousandJobqueueBundle:Job:show.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:Tag:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to create a new Job entity.
+     * Displays a form to create a new Tag entity.
      *
      */
     public function newAction()
     {
-        $entity = new Job();
-        $form   = $this->createForm(new JobType(), $entity);
+        $entity = new Tag();
+        $form   = $this->createForm(new TagType(), $entity);
 
-        return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:Tag:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
     }
 
     /**
-     * Creates a new Job entity.
+     * Creates a new Tag entity.
      *
      */
     public function createAction()
     {
-        $entity  = new Job();
+        $entity  = new Tag();
         $request = $this->getRequest();
-        $form    = $this->createForm(new JobType(), $entity);
+        $form    = $this->createForm(new TagType(), $entity);
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
@@ -83,35 +83,35 @@ class JobController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('jobqueue_job_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('jobqueue_tag_show', array('id' => $entity->getId())));
                 
             }
         }
 
-        return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:Tag:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
     }
 
     /**
-     * Displays a form to edit an existing Job entity.
+     * Displays a form to edit an existing Tag entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('NineThousandJobqueueBundle:Job')->find($id);
+        $entity = $em->getRepository('NineThousandJobqueueBundle:Tag')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Job entity.');
+            throw $this->createNotFoundException('Unable to find Tag entity.');
         }
 
-        $editForm = $this->createForm(new JobType(), $entity);
+        $editForm = $this->createForm(new TagType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('NineThousandJobqueueBundle:Job:edit.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:Tag:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -119,20 +119,20 @@ class JobController extends Controller
     }
 
     /**
-     * Edits an existing Job entity.
+     * Edits an existing Tag entity.
      *
      */
     public function updateAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('NineThousandJobqueueBundle:Job')->find($id);
+        $entity = $em->getRepository('NineThousandJobqueueBundle:Tag')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Job entity.');
+            throw $this->createNotFoundException('Unable to find Tag entity.');
         }
 
-        $editForm   = $this->createForm(new JobType(), $entity);
+        $editForm   = $this->createForm(new TagType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -145,11 +145,11 @@ class JobController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('jobqueue_job_edit', array('id' => $id)));
+                return $this->redirect($this->generateUrl('jobqueue_tag_edit', array('id' => $id)));
             }
         }
 
-        return $this->render('NineThousandJobqueueBundle:Job:edit.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:Tag:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -157,7 +157,7 @@ class JobController extends Controller
     }
 
     /**
-     * Deletes a Job entity.
+     * Deletes a Tag entity.
      *
      */
     public function deleteAction($id)
@@ -170,10 +170,10 @@ class JobController extends Controller
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
-                $entity = $em->getRepository('NineThousandJobqueueBundle:Job')->find($id);
+                $entity = $em->getRepository('NineThousandJobqueueBundle:Tag')->find($id);
 
                 if (!$entity) {
-                    throw $this->createNotFoundException('Unable to find Job entity.');
+                    throw $this->createNotFoundException('Unable to find Tag entity.');
                 }
 
                 $em->remove($entity);
@@ -181,7 +181,7 @@ class JobController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('jobqueue_job'));
+        return $this->redirect($this->generateUrl('jobqueue_tag'));
     }
 
     private function createDeleteForm($id)
