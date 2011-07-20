@@ -209,27 +209,35 @@ To persistently run your job queue you could run the command every 10 seconds (o
 #### Run as a Daemon ####
 You could also run the job queue as a system daemon
 
+CodeMemeDaemonBundle is a wrapper for the PEAR library System_Daemon which was created by Kevin Vanzonneveld.
+
+This will enable you to install the symfony bundle and easily convert your Symfony2 console scripts into system daemons.
+
+pcntl is required to be configured in your PHP binary to use this. On my Ubuntu server I was able to install pcntl easily with the following command:
+
+    sudo apt-get install php-5.3-pcntl-zend-server
+
 ##### install CodeMemeDaemonBundle #####
 You can add the Daemonbundle to your deps file for easy installation
 
-    [DaemonBundle]
-    git=http://github.com/CodeMeme/DaemonBundle.git
-    target=/bundles/CodeMeme/DaemonBundle
+    [CodeMemeDaemonBundle]
+        git=http://github.com/CodeMeme/CodeMemeDaemonBundle.git
+        target=/bundles/CodeMeme/Bundle/CodeMemeDaemonBundle
 
-Then of course you will need to add the CodeMeme namespace to your autoloader
+Add the following to your autoload.php file:
 
     $loader->registerNamespaces(array(
         //...
-        'CodeMeme'         => __DIR__.'/../vendor/bundles',
+        'CodeMeme'     => __DIR__.'/../vendor/bundles',
     ));
-    
-And load the DaemonBundle as a kernel extension
+
+Add The CodeMemeDaemonBundle to your kernel bootstrap sequence
 
     public function registerBundles()
     {
         $bundles = array(
             //...
-            new CodeMeme\DaemonBundle\DaemonBundle(),
+            new CodeMeme\Bundle\CodeMemeDaemonBundle\CodeMemeDaemonBundle(),
         );
         //...
 
@@ -238,27 +246,40 @@ And load the DaemonBundle as a kernel extension
 
 Then put the daemon configuration in your config files
 
-    #config.yml
-    ---
-    daemon:
-        options:
-            appName: jobqueue
-            appDir: %kernel.root_dir%
-            appDescription: NineThousandJobQueueBundle
-            logLocation: %kernel.logs_dir%/%kernel.environment%.jobqueue.log
-            authorName: John Doe
-            authorEmail: me.email.com
-            appPidLocation: %kernel.cache_dir%/jobqueue/jobqueue.pid
-            sysMaxExecutionTime: 0
-            sysMaxInputTime: 0
-            sysMemoryLimit: 1024M
-            appRunAsGID: 1
-            appRunAsUID: 1
+    #CodeMemeDaemonBundle Configuration Example
+    code_meme_daemon:
+        daemons:
+            jobqueue: 
+                appRunAsGID: 33
+                appRunAsUID: 33
+
+            #an example of all the available options
+            explicitexample:
+                appName: example
+                appDir: %kernel.root_dir%
+                appDescription: Example of how to configure the DaemonBundle
+                logLocation: %kernel.logs_dir%/%kernel.environment%.example.log
+                authorName: Jesse Greathouse
+                authorEmail: jesse.greathouse@gmail.com
+                appPidLocation: %kernel.cache_dir%/example/example.pid
+                sysMaxExecutionTime: 0
+                sysMaxInputTime: 0
+                sysMemoryLimit: 1024M
+                appRunAsGID: 1
+                appRunAsUID: 1
+                
+##### security concern with default user and group RunAs #####
+it is highly recommended to set the appRunAsGID and /or appRunAsUID options as this can cause troublesome problems with permissions on your server. The default is 1 for both and from system to system this may be root or it may be a different user. To make sure files are set to the correct permissions level, it is best to set these values to the UID and GID of the webserver or application user.
+
+To find out the group and user id of a specific user you can use the following commands.
+
+    jesse@picard:~/ninethousand.org$ id -u www-data
+    jesse@picard:~/ninethousand.org$ id -g www-data
 
 Now you can simply start and stop the Jobqueue Daemon with the following commands
 
-    jesse@picard:~/ninethousand.org$ php app/console jobqueue:start
+    jesse@picard:~/ninethousand.org$ sudo php app/console jobqueue:start
 
-    jesse@picard:~/ninethousand.org$ php app/console jobqueue:stop
+    jesse@picard:~/ninethousand.org$ sudo php app/console jobqueue:stop
 
-    jesse@picard:~/ninethousand.org$ php app/console jobqueue:restart
+    jesse@picard:~/ninethousand.org$ sudo php app/console jobqueue:restart
