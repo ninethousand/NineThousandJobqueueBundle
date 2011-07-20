@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-use NineThousand\DaemonBundle\Daemon;
+use CodeMeme\Bundle\CodeMemeDaemonBundle\Daemon;
 
 class RestartCommand extends ContainerAwareCommand
 {
@@ -25,18 +25,14 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-         
-        $options = $this->getContainer()->getParameter('jobqueue.daemon.options');
-        $daemon = new Daemon($options);
+        $daemon = new Daemon($this->getContainer()->getParameter('jobqueue.daemon.options'));
         $daemon->stop();
-        unset($daemon);
-        
-        $daemon = new Daemon($options);
+
         $daemon->iterate(5);
         $daemon->start();
         
         while ($daemon->isRunning()) {
-            $this->container->get('jobqueue.control')->run();
+            $this->getContainer()->get('jobqueue.control')->run();
         }
         
         $daemon->stop();

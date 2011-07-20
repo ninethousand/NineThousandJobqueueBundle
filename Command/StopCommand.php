@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-use NineThousand\DaemonBundle\Daemon;
+use CodeMeme\Bundle\CodeMemeDaemonBundle\Daemon;
 
 class StopCommand extends ContainerAwareCommand
 {
@@ -25,9 +25,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $options = $this->getContainer()->getParameter('jobqueue.daemon.options');
-        $daemon = new Daemon($options);
-        
+        $daemon = new Daemon($this->getContainer()->getParameter('jobqueue.daemon.options'));
         $daemon->stop();
     }
 
