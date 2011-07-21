@@ -253,10 +253,10 @@ By Default, system daemons have a sensible configuration. If you need to change 
     code_meme_daemon:
         daemons:
             #creates a daemon using default options
-            example: ~
+            jobqueue: ~
 
             #an example of all the available options
-            explicitexample:
+            explicitjobqueue:
                 appName: example
                 appDir: %kernel.root_dir%
                 appDescription: Example of how to configure the DaemonBundle
