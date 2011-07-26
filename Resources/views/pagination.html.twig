@@ -1,0 +1,17 @@
+<section class="pagination" />
+    {% if pages %}
+            <ul>
+            {% for page in pages %}
+                <li>
+                    {% if page == currentPage %}
+                            <strong>{{ page }}</strong>
+                    {% else %}
+                        <a href>{{ page }}</strong>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="emptyhistory"> No jobs found in history </p>
+        {% endif %}
+</section>

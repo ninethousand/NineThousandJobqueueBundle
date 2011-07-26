@@ -16,17 +16,7 @@ class DefaultController extends Controller
             'activeQueue'    => $queueControl->getActiveQueue(),
             'retryQueue'     => $queueControl->getRetryQueue(),
             'scheduleQueue'  => $queueControl->getScheduleQueue(),
-            'history'        => $this->getHistory(),
         ));
         
-    }
-    
-    private function getHistory()
-    {
-        $queueOptions = $this->container->getParameter('jobqueue.adapter.options');
-        $historyAdapterClass = $queueOptions['history_adapter_class'];
-        $historyAdapter = new $historyAdapterClass($this->container->getParameter('jobqueue.adapter.options'), 
-                                                   $this->container->get('doctrine')->getEntityManager());
-        return new History($historyAdapter, null, 0);
     }
 }

@@ -8,6 +8,7 @@
         <default key="_controller">NineThousandJobqueueBundle:Default:index</default>
     </route>
 
+    <import resource="@NineThousandJobqueueBundle/Resources/config/routing/history.xml" prefix="/history" />
     <import resource="@NineThousandJobqueueBundle/Resources/config/routing/job.xml" prefix="/job" />
     <import resource="@NineThousandJobqueueBundle/Resources/config/routing/arg.xml" prefix="/arg" />
     <import resource="@NineThousandJobqueueBundle/Resources/config/routing/param.xml" prefix="/param" />

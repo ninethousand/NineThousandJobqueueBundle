@@ -5,8 +5,16 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     
     <parameters>
+        <!--Job Class options -->
+        <parameter key="jobqueue.job.class" >NineThousand\Jobqueue\Job\StandardJob</parameter>
+        
+        <!--Control Service Class -->
         <parameter key="jobqueue.control.class" >NineThousand\Jobqueue\Service\JobqueueControl</parameter>
+        
+        <!--Primary adapter class -->
         <parameter key="jobqueue.adapter.class" >NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Queue\DoctrineQueueAdapter</parameter>
+        
+        <!--parameter options -->
         <parameter key="jobqueue.adapter.options" type="collection" >
             <parameter key="job_entity_class" >NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job</parameter>
             <parameter key="job_adapter_class" >NineThousand\Bundle\NineThousandJobqueueBundle\Vendor\Doctrine\Adapter\Job\DoctrineJobAdapter</parameter>
@@ -19,7 +27,13 @@
                 </parameter>
             </parameter>
         </parameter>
-        <parameter key="jobqueue.job.class" >NineThousand\Jobqueue\Job\StandardJob</parameter>
+        
+        <!--ui options -->
+        <parameter key="jobqueue.ui.options" type="collection" >
+            <parameter key="pagination" type="collection" >
+                <parameter key="limit" >20</parameter>
+            </parameter>
+        </parameter>
     </parameters>
     
     <services>

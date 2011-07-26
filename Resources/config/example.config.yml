@@ -1,42 +1,37 @@
-#Jobqueue Configuration
 ---
 #Jobqueue Configuration
 jobqueue:
-    #a jqueryui theme folder in the Resources/css directory
-    theme: smoothness
-    
+
     #The control service configuration
     control:
-        class:  "NineThousand\Bundle\NineThousandJobqueueBundle\Service\JobqueueControl"
+        class:  "NineThousand\Jobqueue\Service\JobqueueControl"
 
-    #Job Model configuration
+    #Job component configuration
     job:
-        class:  "NineThousand\Bundle\NineThousandJobqueueBundle\Model\Job\StandardJob"
+        class:  "NineThousand\Jobqueue\Job\StandardJob"
 
     #adapter configuration includes job adapter and job controll mapping
     adapter:
-        class:  "NineThousand\Bundle\NineThousandJobqueueBundle\Model\Adapter\Queue\DoctrineQueueAdapter"
+        class:  "NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Queue\DoctrineQueueAdapter"
         options:
             job_entity_class:       "NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job"
-            job_adapter_class:      "NineThousand\Bundle\NineThousandJobqueueBundle\Model\Adapter\Job\DoctrineJobAdapter"
+            job_adapter_class:      "NineThousand\Bundle\NineThousandJobqueueBundle\Vendor\Doctrine\Adapter\Job\DoctrineJobAdapter"
             history_entity_class:   "NineThousand\Bundle\NineThousandJobqueueBundle\Entity\History"
-            history_adapter_class:  "NineThousand\Bundle\NineThousandJobqueueBundle\Model\Adapter\History\DoctrineHistoryAdapter"
-            log_adapter_class:      "NineThousand\Bundle\NineThousandJobqueueBundle\Model\Adapter\Log\MonologAdapter"
+            history_adapter_class:  "NineThousand\Jobqueue\Vendor\Doctrine\Adapter\History\DoctrineHistoryAdapter"
+            log_adapter_class:      "NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Log\MonologAdapter"
             jobcontrol:
                 type_mapping:
-                    SymfonyConsoleJobControl:   "NineThousand\Bundle\NineThousandJobqueueBundle\Model\Adapter\Job\Control\SymfonyConsoleJobControl"
-            
-    daemon:
+                    SymfonyConsoleJobControl:   "NineThousand\Jobqueue\Vendor\Symfony2\Adapter\Job\Control\Symfony2ConsoleJobControl"
+    
+    #ui configuration
+    ui:
         options:
-            appName: jobqueue
-            appDir: %kernel.root_dir%
-            appDescription: Uses MySQL tables as a job queue
-            logLocation: %kernel.logs_dir%/%kernel.environment%.jobqueue.log
-            authorName: John Doe
-            authorEmail: me.email.com
-            appPidLocation: %kernel.cache_dir%/jobqueue/jobqueue.pid
-            sysMaxExecutionTime: 0
-            sysMaxInputTime: 0
-            sysMemoryLimit: 1024M
-            appRunAsGID: 1
-            appRunAsUID: 1
+            pagnation:
+                limit: 20
+
+---
+#CodeMemeDaemonBundle Configuration Example
+code_meme_daemon:
+    daemons:
+        #creates a daemon using default options
+        jobqueue: ~

@@ -73,6 +73,12 @@ app/config.yml
                     type_mapping:
                         SymfonyConsoleJobControl:   "NineThousand\Jobqueue\Vendor\Symfony2\Adapter\Job\Control\Symfony2ConsoleJobControl"
                         
+        #ui configuration
+        ui:
+        options:
+            pagnation:
+                limit: 20 
+                        
 ### routing.yml ###
 Import the bundle routing into your projects routing config with your desired prefix:
 

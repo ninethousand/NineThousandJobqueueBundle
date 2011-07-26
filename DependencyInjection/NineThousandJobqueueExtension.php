@@ -29,11 +29,6 @@ class NineThousandJobqueueExtension extends Extension
         {
             $mergedConfig = array_merge($mergedConfig, $cnf);
         }
-
-        if (isset($mergedConfig['daemon']['options']))
-        {
-            $container->setParameter($alias.'.daemon.options', $mergedConfig['daemon']['options']);
-        }
         
         if (isset($mergedConfig['adapter']['options']))
         {
@@ -53,6 +48,11 @@ class NineThousandJobqueueExtension extends Extension
         if (isset($mergedConfig['adapter']['class']))
         {
             $container->setParameter($alias.'.adapter.class', $mergedConfig['adapter']['class']);
+        }
+        
+        if (isset($mergedConfig['ui']['options']))
+        {
+            $container->setParameter($alias.'.ui.options', $mergedConfig['ui']['options']);
         }
     }
 
