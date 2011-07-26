@@ -77,7 +77,9 @@ app/config.yml
         ui:
         options:
             pagnation:
-                limit: 20 
+                limit:          40
+                pages_before:   5
+                pages_after:    5
                         
 ### routing.yml ###
 Import the bundle routing into your projects routing config with your desired prefix:

@@ -109,7 +109,7 @@ class StandardHistoryTest extends WebTestCase
         
         $this->history = StandardHistory::factory($historyAdapter);
         
-        $this->assertTrue(($this->history->totalEntries() >=  4), "");
+        $this->assertTrue(($this->history->count() >=  4), "");
     }
 
     

@@ -27,7 +27,9 @@ jobqueue:
     ui:
         options:
             pagnation:
-                limit: 20
+                limit:          40
+                pages_before:   5
+                pages_after:    5
 
 ---
 #CodeMemeDaemonBundle Configuration Example

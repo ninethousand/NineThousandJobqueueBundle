@@ -1,17 +1,21 @@
-<section class="pagination" />
-    {% if pages %}
-            <ul>
-            {% for page in pages %}
-                <li>
-                    {% if page == currentPage %}
-                            <strong>{{ page }}</strong>
-                    {% else %}
-                        <a href>{{ page }}</strong>
-                    {% endif %}
-                </li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p class="emptyhistory"> No jobs found in history </p>
-        {% endif %}
-</section>
+ {% if pagination.pages %}
+ <section class="pagination" >
+    <ul>
+        <li>
+            <a title="First Page" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}=1">First</a>
+        </li>
+        {% for p in pagination.pages %}
+        <li>
+        {% if p == pagination.current %}
+            <strong>{{ p }}</strong>
+            {% else %}
+            <a title="Page {{ p }}" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}={{ p }}">{{ p }}</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+        <li>
+            <a title="Last Page" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}={{ pagination.last }}">Last</a>
+        </li>
+    </ul>
+ </section>
+ {% endif %}

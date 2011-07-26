@@ -2,10 +2,11 @@
  {% block title "Jobqueue History" %}
  {% block body %}
  
+ {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
  <section id="History" />
     <h1>Jobqueue History</h1>
     <article id="jobhistory">
-    {% if history.totalEntries %}
+    {% if history.total %}
             <ul>
             {% for entry in history %}
                 <li>
@@ -31,4 +32,5 @@
         {% endif %}
     </article>
  </section>
+ {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
  {% endblock %}

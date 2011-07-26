@@ -31,7 +31,9 @@
         <!--ui options -->
         <parameter key="jobqueue.ui.options" type="collection" >
             <parameter key="pagination" type="collection" >
-                <parameter key="limit" >20</parameter>
+                <parameter key="limit" >40</parameter>
+                <parameter key="pages_before" >5</parameter>
+                <parameter key="pages_after" >5</parameter>
             </parameter>
         </parameter>
     </parameters>
