@@ -6,7 +6,7 @@
 		    $( "button", ".pagination" ).button( "disable" )
 	    });
 	</script>
- <section class="pagination" >
+ <div class="pagination" >
     <ul>
         <li>
             <a title="First Page" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}=1">First</a>
@@ -24,5 +24,5 @@
             <a title="Last Page" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}={{ pagination.last }}">Last</a>
         </li>
     </ul>
- </section>
+ </div>
  {% endif %}

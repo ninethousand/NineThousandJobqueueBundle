@@ -2,29 +2,32 @@ html, .ui-widget, .ui-accordion-header {
     font-family: Arial, Georgia, serif;
     font-size: 14px;
 }
+ul {list-style-type: none; padding-left:0px}
 
-.jobdata li, lh {
-    clear: both;
+.jobdata li {
     display: inline-block;
     padding-left: 2px;
     padding-right: 35px;
     padding-bottom: 0px;
     padding-top: 0px;
-    overflow: hidden;
 }
 
 .pagination li {
     display: inline-block;
 }
 
-.jobdata lh {
-    padding-right: 2px;
-    font-weight: bold;
-}
-
 .emptyqueue {
     padding-left: 20px;
 }
+
+#wrapper {position: absolute;top:5px;width:99%;margin 0 5px 0 5px;padding 0;}
+#wrapper #rightPanel {float:right; width: 84%;}
+#wrapper #rightPanel #history {display:inline-block; width: 100%} 
+#wrapper #rightPanel #footer {clear:both;display:block;padding 5px;}
+#wrapper #leftPanel {float:left;width:15%;}
+#wrapper #leftPanel #menu {width:170px;vertical-align:top;padding 5px;}
+#wrapper #leftPanel #menu a {display:block;width:100%;height:50px;vertical-align:middle;margin 0 5px 0 5px;}
+
 
 #schedulequeue h2,
 #activequeue h2,
@@ -34,7 +37,3 @@ html, .ui-widget, .ui-accordion-header {
     height: 30px;
 }
 
-#history ul
-{
-    list-style-type: none;
-}

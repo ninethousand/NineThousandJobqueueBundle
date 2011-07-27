@@ -1,0 +1,15 @@
+    <script>
+	    $(function() {
+		    $( "a", "#menu" ).button();
+		    $( "a", "#menu" ).click(function() { return false; });
+	        });
+	</script>
+
+<div id="menu">
+    <ul>
+        <li><a title="Go To Jobqueue Home" href="{{ path('ninethousand_jobqueue_home') }}" >Jobqueue Home</a></li>
+        <li><a title="Go To A Queue" href="{{ path('ninethousand_jobqueue_home') }}" >Queues</a></li>
+        <li><a title="Create a New Job" href="{{ path('jobqueue_job_new') }}" >New Job</a></li>
+        <li><a title="View Jobqueue History" href="{{ path('jobqueue_history') }}" >History</a></li>
+    </ul>
+</div>

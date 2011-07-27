@@ -22,12 +22,20 @@
 
 
 <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body class="{{ app.environment }}">
-        {% block body %}{% endblock %}
+</head>
 
-        <div id="footer" class="span-6">
-            {% include "NineThousandJobqueueBundle::footer.html.twig" %}
+<body class="{{ app.environment }}">
+    <div id="wrapper" >
+        <div id="leftPanel" >
+            {% include "NineThousandJobqueueBundle::menu.html.twig" %}
         </div>
-    </body>
+        
+        <div id="rightPanel" >
+            {% block body %}{% endblock %}
+            <div id="footer" >
+                {% include "NineThousandJobqueueBundle::footer.html.twig" %}
+            </div>
+        </div>
+    </div>
+</body>
 </html>

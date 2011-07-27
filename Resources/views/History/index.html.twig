@@ -1,36 +1,25 @@
- {% extends 'NineThousandJobqueueBundle::layout.html.twig' %}
+ {% extends app.request.isXmlHttpRequest() ? 'NineThousandJobqueueBundle::ajax.html.twig' : 'NineThousandJobqueueBundle::layout.html.twig' %}
  {% block title "Jobqueue History" %}
  {% block body %}
- 
- {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
- <section id="history" />
+  <div id="history" >
     <h1 >Jobqueue History</h1>
-    <article id="jobhistory">
+    {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
     {% if history.total %}
             <ul>
             {% for entry in history %}
-                <li class="ui-state-default">
-                    <ul class="jobdata">
-                        <lh> Job id </lh>
-                        <li> {{ entry.jobId }} </li>
-                        <lh> Job Type </lh>
-                        <li> {{ entry.jobType }} </li>
-                        <lh> Status </lh>
-                        <li> {{ entry.status }} </li>
-                        <lh> Message </lh>
-                        <li> {{ entry.message }} </li>
-                        <lh> Job Schedule </lh>
-                        <li> {{ entry.jobSchedule }} </li>
-                        <lh> Timestamp </lh>
-                        <li> {{ entry.timestamp|date("Y-m-d g:ia") }} </li>
-                    </ul>
+                <li>
+                    <span><strong> Job id </strong> {{ entry.jobId }} </span>
+                    <span><strong> Job Type </strong> {{ entry.jobType }} </span>
+                    <span><strong> Status </strong> {{ entry.status }} </span>
+                    <span><strong> Message </strong> {{ entry.message }} </span>
+                    <span><strong> Job Schedule </strong> {{ entry.jobSchedule }} </span>
+                    <span><strong> Timestamp </strong> {{ entry.timestamp|date("Y-m-d g:ia") }} </span>
                 </li>
             {% endfor %}
             </ul>
         {% else %}
             <p class="emptyhistory"> No jobs found in history </p>
         {% endif %}
-    </article>
- </section>
+ </div>
  {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
  {% endblock %}
