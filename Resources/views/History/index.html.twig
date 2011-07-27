@@ -3,13 +3,13 @@
  {% block body %}
  
  {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
- <section id="History" />
-    <h1>Jobqueue History</h1>
+ <section id="history" />
+    <h1 >Jobqueue History</h1>
     <article id="jobhistory">
     {% if history.total %}
             <ul>
             {% for entry in history %}
-                <li>
+                <li class="ui-state-default">
                     <ul class="jobdata">
                         <lh> Job id </lh>
                         <li> {{ entry.jobId }} </li>
@@ -22,7 +22,7 @@
                         <lh> Job Schedule </lh>
                         <li> {{ entry.jobSchedule }} </li>
                         <lh> Timestamp </lh>
-                        <li> {{ entry.timestamp|date("m/d/Y") }} </li>
+                        <li> {{ entry.timestamp|date("Y-m-d g:ia") }} </li>
                     </ul>
                 </li>
             {% endfor %}

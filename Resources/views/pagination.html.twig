@@ -1,4 +1,11 @@
  {% if pagination.pages %}
+    <script>
+	    $(function() {
+	        $( ".pagination" ).buttonset();
+		    $( "a, button", ".pagination" ).button();
+		    $( "button", ".pagination" ).button( "disable" )
+	    });
+	</script>
  <section class="pagination" >
     <ul>
         <li>
@@ -7,7 +14,7 @@
         {% for p in pagination.pages %}
         <li>
         {% if p == pagination.current %}
-            <strong>{{ p }}</strong>
+            <button>{{ p }}</button>
             {% else %}
             <a title="Page {{ p }}" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}={{ p }}">{{ p }}</a>
             {% endif %}

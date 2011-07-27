@@ -75,7 +75,7 @@ class History
 
 
     /**
-     * @ORM\Column(nullable="true", type="date")
+     * @ORM\Column(nullable="true", type="datetime")
      */
     protected $timestamp;
         

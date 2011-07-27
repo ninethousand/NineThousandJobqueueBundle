@@ -13,6 +13,10 @@ html, .ui-widget, .ui-accordion-header {
     overflow: hidden;
 }
 
+.pagination li {
+    display: inline-block;
+}
+
 .jobdata lh {
     padding-right: 2px;
     font-weight: bold;
@@ -28,4 +32,9 @@ html, .ui-widget, .ui-accordion-header {
     padding-left: 25px;
     padding-top: 10px;
     height: 30px;
+}
+
+#history ul
+{
+    list-style-type: none;
 }
