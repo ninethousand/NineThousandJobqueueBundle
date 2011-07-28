@@ -41,15 +41,10 @@ jQuery(function($) {
         }
         return false;
     };
-    
-    var hideMe = function() {
-        $(this).hide( 'blind', {}, 170);
-    }
 
     //this object has to be defined near the bottom so the functions will be defined
     var AjaxControl = {
         '#menu a'                   : {type : 'click',      handl : rightPanelLink},
-        '#jobmenu'                  : {type : 'mouseleave', handl : hideMe},
         '#newjob form'              : {type : 'submit',     handl : submitHandler},
         '#history .pagination a'    : {type : 'click',      handl : rightPanelLink}
     };
