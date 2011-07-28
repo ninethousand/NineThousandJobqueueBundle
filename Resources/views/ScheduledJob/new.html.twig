@@ -1,5 +1,5 @@
  {% extends app.request.isXmlHttpRequest() ? 'NineThousandJobqueueBundle::ajax.html.twig' : 'NineThousandJobqueueBundle::layout.html.twig' %}
- {% block title "Jobs" %}
+ {% block title "Scheduled Jobs" %}
  {% block body %}
  <script>
     $(function() {
@@ -9,7 +9,7 @@
   <div id="newjob" >
     <h1>Job creation</h1>
 
-    <form action="{{ path('jobqueue_job_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('jobqueue_scheduledjob_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
             <button type="submit">Create</button>

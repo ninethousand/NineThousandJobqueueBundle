@@ -5,13 +5,13 @@ namespace NineThousand\Bundle\NineThousandJobqueueBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job;
-use NineThousand\Bundle\NineThousandJobqueueBundle\Form\JobType;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Form\ScheduledJobType as JobType;
 
 /**
- * Job controller.
+ * ScheduledJob controller.
  *
  */
-class JobController extends Controller
+class ScheduledJobController extends Controller
 {
     /**
      * Lists all Job entities.
@@ -23,7 +23,7 @@ class JobController extends Controller
 
         $entities = $em->getRepository('NineThousandJobqueueBundle:Job')->findAll();
 
-        return $this->render('NineThousandJobqueueBundle:Job:index.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:ScheduledJob:index.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -44,7 +44,7 @@ class JobController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('NineThousandJobqueueBundle:Job:show.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:ScheduledJob:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -59,7 +59,7 @@ class JobController extends Controller
         $entity = new Job();
         $form   = $this->createForm(new JobType(), $entity);
 
-        return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:ScheduledJob:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -84,12 +84,12 @@ class JobController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('jobqueue_job_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('jobqueue_scheduledjob_show', array('id' => $entity->getId())));
                 
             }
         }
 
-        return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:ScheduledJob:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
         ));
@@ -112,7 +112,7 @@ class JobController extends Controller
         $editForm = $this->createForm(new JobType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('NineThousandJobqueueBundle:Job:edit.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:ScheduledJob:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -146,11 +146,11 @@ class JobController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('jobqueue_job_edit', array('id' => $id)));
+                return $this->redirect($this->generateUrl('jobqueue_scheduledjob_edit', array('id' => $id)));
             }
         }
 
-        return $this->render('NineThousandJobqueueBundle:Job:edit.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:ScheduledJob:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -182,7 +182,7 @@ class JobController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('jobqueue_job'));
+        return $this->redirect($this->generateUrl('jobqueue_scheduledjob'));
     }
 
     private function createDeleteForm($id)
