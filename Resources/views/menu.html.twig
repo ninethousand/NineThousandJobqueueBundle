@@ -1,4 +1,5 @@
     <script>
+        
 	    $(function() {
 		    $( "a", "#menu" ).button();
 		    
@@ -12,22 +13,7 @@
 					}
 				})
 				.click(function() {
-					alert( "Could display a menu to select an action" );
-				})
-				.parent()
-					.buttonset();
-			
-			$( "#scheduledsplit" )
-			.button()
-			.next()
-				.button( {
-					text: false,
-					icons: {
-						primary: "ui-icon-triangle-1-s"
-					}
-				})
-				.click(function() {
-					alert( "Could display a menu to select an action" );
+					$( "#jobmenu" ).toggle( 'blind', {}, 170);
 				})
 				.parent()
 					.buttonset();
@@ -36,16 +22,19 @@
 
 <div id="menu">
     <ul>
-        <li><a title="Go To Jobqueue Home" href="{{ path('ninethousand_jobqueue_home') }}" >Jobqueue Home</a></li>
+        <li><a class="single" title="Go To Jobqueue Home" href="{{ path('ninethousand_jobqueue_home') }}" >Jobqueue Home</a></li>
         <li>
-            <button href="{{ path('jobqueue_job') }}" id="jobssplit" >Jobs</button>
-            <button id="jobsselect">Select an action</button>
+            <a class="split" title="Jobs" href="{{ path('jobqueue_job') }}" id="jobssplit" >Jobs</a>
+            <a id="jobsselect">Select an action</a>
+	        <div id="jobmenu" class="ui-widget-content ui-corner-all">
+                <a class="submenu" title="Pending Jobs" href="{{ path('jobqueue_job') }}?status=pending" >Pending</a>
+                <a class="submenu" title="Successful Jobs" href="{{ path('jobqueue_job') }}?status=success" >Successful</a>
+                <a class="submenu" title="Retry Jobs" href="{{ path('jobqueue_job') }}?status=retry" >Retry</a>
+                <a class="submenu" title="Failed Jobs" href="{{ path('jobqueue_job') }}?status=fail" >Failed</a>
+            </div>
         </li>
-        <li>
-            <button href="{{ path('jobqueue_scheduledjob') }}" id="scheduledsplit" >Scheduled</button>
-            <button id="jobsselect" >Select an action</button>
-        </li>
-        <li><a title="Create a New Job" href="{{ path('jobqueue_job_new') }}" >New Job</a></li>
-        <li><a title="View Jobqueue History" href="{{ path('jobqueue_history') }}" >History</a></li>
+        <li><a class="single" title="Scheduled Jobs" href="{{ path('jobqueue_scheduledjob') }}" >Scheduled</a></li>
+        <li><a class="single" title="Create a New Job" href="{{ path('jobqueue_job_new') }}" >New Job</a></li>
+        <li><a class="single" title="View Jobqueue History" href="{{ path('jobqueue_history') }}" >History</a></li>
     </ul>
 </div>
