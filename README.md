@@ -37,7 +37,7 @@ Add The Jobqueue bundle to your kernel bootstrap sequence
     {
         $bundles = array(
             //...
-            new NineThousand\Bundle\NineThousandBundle\NineThousandNineThousandBundle(),
+            new NineThousand\Bundle\NineThousandJobqueueBundle\NineThousandJobqueueBundle(),
         );
         //...
 
