@@ -1,4 +1,4 @@
- {% extends 'NineThousandJobqueueBundle::layout.html.twig' %}
+ {% extends app.request.isXmlHttpRequest() ? 'NineThousandJobqueueBundle::ajax.html.twig' : 'NineThousandJobqueueBundle::layout.html.twig' %}
  {% block title "Jobqueue Status Control Center" %}
  {% block body %}
  

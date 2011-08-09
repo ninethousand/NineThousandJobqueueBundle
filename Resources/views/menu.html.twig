@@ -26,10 +26,10 @@
 
 <div id="menu">
     <ul>
-        <li><a class="single" title="Go To Jobqueue Home" href="{{ path('ninethousand_jobqueue_home') }}" >Jobqueue Home</a></li>
+        <li><a class="single noajax" title="Go To Jobqueue Home" href="{{ path('ninethousand_jobqueue_home') }}" >Jobqueue Home</a></li>
         <li>
             <a class="split" title="Jobs" href="{{ path('jobqueue_job') }}" id="jobssplit" >Jobs</a>
-            <a id="jobsselect">Select an action</a>
+            <a id="jobsselect" class="noajax">Select an action</a>
 	        <div id="jobmenu" class="ui-widget-content ui-corner-all">
                 <a class="submenu" title="Pending Jobs" href="{{ path('jobqueue_job') }}?status=pending" >Pending</a>
                 <a class="submenu" title="Successful Jobs" href="{{ path('jobqueue_job') }}?status=success" >Successful</a>

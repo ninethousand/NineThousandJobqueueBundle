@@ -4,10 +4,10 @@ jQuery(function($) {
         $.each(AjaxControl, function(key, value) {
             if (value['handl'] instanceof Array) {
                 $.each(AjaxControl, function(i) {
-                    $(key).bind(value['type'], i);
+                    $(key).unbind(value['type']).bind(value['type'], i);
                 });
             } else {
-                $(key).bind(value['type'], value['handl']);
+                $(key).unbind(value['type']).bind(value['type'], value['handl']);
             }
         });
     };
@@ -26,7 +26,6 @@ jQuery(function($) {
                 return false;
             }
         }
-
         return false;
     };
 
@@ -42,21 +41,13 @@ jQuery(function($) {
         return false;
     };
 
+
     //this object has to be defined near the bottom so the functions will be defined
     var AjaxControl = {
-        '#menu a'                   : {type : 'click',      handl : rightPanelLink},
+        '#menu a:not(.noajax)'      : {type : 'click',      handl : rightPanelLink},
         '#newjob form'              : {type : 'submit',     handl : submitHandler},
         '#history .pagination a'    : {type : 'click',      handl : rightPanelLink}
     };
-
-
-    $(document).ajaxSend(function(e, xhr, settings) {
-        var targetUrl = e.target.activeElement.getAttribute('href');
-        if (targetUrl!=null) {
-            setUiIndex(e.target.activeElement.classList[0], targetUrl)
-        }
-    });
-
 
     $(document).ready(attachHandler);
 });
