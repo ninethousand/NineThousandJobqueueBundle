@@ -4,6 +4,9 @@ namespace NineThousand\Bundle\NineThousandJobqueueBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Form\ParamType;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Form\ArgType;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Form\TagType;
 
 class JobType extends AbstractType
 {
@@ -15,14 +18,21 @@ class JobType extends AbstractType
             ->add('maxRetries')
             ->add('executable')
             ->add('type')
-            ->add('params')
-            ->add('args')
-            ->add('tags')
+            ->add('params', 'collection', array('type' => new ParamType()))
+            ->add('args', 'collection', array('type' => new ArgType()))
+            ->add('tags', 'collection', array('type' => new TagType()))
         ;
+    }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job',
+        );
     }
 
     public function getName()
     {
-        return 'ninethousand_bundle_ninethousandjobqueuebundle_jobtype';
+        return 'jobqueue_job';
     }
 }

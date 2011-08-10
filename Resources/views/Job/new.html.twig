@@ -4,16 +4,105 @@
  <script>
     $(function() {
         $( "button", "#newjob form" ).button();
+        $('#btnParamDel').attr('disabled', true);
+        $('#btnArgDel').attr('disabled','disabled');
+        $('#btnTagDel').attr('disabled','disabled');
+        
+        $('#btnParamAdd').click(function() {
+            var num     = $('.paramItem').length; // how many "duplicatable" input fields we currently have
+            var newNum  = new Number(num + 1);      // the numeric ID of the new input field being added
+ 
+            // create the new element via clone(), and manipulate it's ID using newNum value
+            var newElem = $('#param' + num).clone().attr('id', 'param' + newNum);
+ 
+            // manipulate the name/id values of the input inside the new element
+            paramKeyInput = newElem.children(':first').children('span').children('input');
+            paramValueInput = newElem.children(':last').children('span').children('input');
+            paramKeyInput.attr('id', 'jobqueue_job_params_' + newNum + '_key').attr('name', 'jobqueue_job[params][' + newNum + '][key]');
+            paramValueInput.attr('id', 'jobqueue_job_params_' + newNum + '_value').attr('name', 'jobqueue_job[params][' + newNum + '][value]');
+ 
+            // insert the new element after the last "duplicatable" input field
+            $('#param' + num).after(newElem);
+ 
+            // enable the "remove" button
+            $('#btnParamDel').attr('disabled', false);
+            return false;
+        });
+        $('#btnParamDel').click(function() {
+            var num     = $('.paramItem').length; // how many "duplicatable" input fields we currently have
+            $('#param' + num).remove();     // remove the last element
+         
+            // if only one element remains, disable the "remove" button
+            if (num-1 == 1)
+                $('#btnParamDel').attr('disabled', true);
+            return false;
+        });
     });
   </script>
   <div id="newjob" >
-    <h1>Job creation</h1>
 
     <form action="{{ path('jobqueue_job_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
+        <div id="job">
+        <h2> Job Information</h2>
+        {{ form_row(form.type) }}
+        {{ form_errors(form.type) }}
+        {{ form_row(form.executable) }}
+        {{ form_errors(form.executable) }}
+        {{ form_row(form.retry) }}
+        {{ form_errors(form.retry) }}
+        {{ form_row(form.cooldown) }}
+        {{ form_errors(form.cooldown) }}
+        {{ form_row(form.maxRetries) }}
+        {{ form_errors(form.maxRetries) }}
+        </div>
+        <div id="params">
+            <h2>Parameters</h2>
+            <ul>
+            {% for param in form.params %}
+                <li id="param1" class="paramItem">
+                    <div><span class="paramkey">{{ form_widget(param.key) }}</span>&#61;<span>{{ form_widget(param.value) }}</span></div>
+                    <div><span class="paramval">{{ form_errors(param.key) }}</span> <span>{{ form_errors(param.value) }}</span></div>
+                </li>
+            {% endfor %}
+            </ul>
+            <div>
+                <button id="btnParamAdd">add another param</button>
+                <button id="btnParamDel">remove param</button>
+            </div>
+        </div>
+        <div id="args">
+            <h2>Arguments</h2>
+            <ul>
+            {% for arg in form.args %}
+                <li id="arg1" class="argItem">
+                    <div>{{ form_widget(arg.value) }}</div>
+                    <div>{{ form_errors(arg.value) }}</div>
+                </li>
+            {% endfor %}
+            </ul>
+            <div>
+                <button id="btnArgAdd">add another arg</button>
+                <button id="btnArgDel">remove arg</button>
+            </div>
+        </div>
+        <div id="tags">
+            <h2>Tags</h2>
+            <ul>
+            {% for tag in form.tags %}
+                <li id="tags1" class="tagItem">
+                    <div>{{ form_widget(tag.value) }}</div>
+                    <div>{{ form_errors(tag.value) }}</div>
+                </li>
+            {% endfor %}
+            </ul>
+            <div>
+                <button id="btnTagAdd">add another tag</button>
+                <button id="btnTagDel">remove tag</button>
+            </div>
+        </div>
+        <div id="submits">
+            <button type="submit">Save</button>
+        </div>
     </form>
  </div>
  {% endblock %}

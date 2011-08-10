@@ -16,9 +16,16 @@ class ParamType extends AbstractType
             ->add('active')
         ;
     }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Param',
+        );
+    }
 
     public function getName()
     {
-        return 'ninethousand_bundle_ninethousandjobqueuebundle_paramtype';
+        return 'jobqueue_param';
     }
 }

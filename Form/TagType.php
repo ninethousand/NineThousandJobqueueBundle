@@ -15,9 +15,16 @@ class TagType extends AbstractType
             ->add('active')
         ;
     }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Tag',
+        );
+    }
 
     public function getName()
     {
-        return 'ninethousand_bundle_ninethousandjobqueuebundle_tagtype';
+        return 'jobqueue_tag';
     }
 }

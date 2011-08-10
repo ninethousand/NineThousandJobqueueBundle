@@ -15,9 +15,16 @@ class ArgType extends AbstractType
             ->add('active')
         ;
     }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Arg',
+        );
+    }
 
     public function getName()
     {
-        return 'ninethousand_bundle_ninethousandjobqueuebundle_argtype';
+        return 'jobqueue_arg';
     }
 }

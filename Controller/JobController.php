@@ -5,6 +5,9 @@ namespace NineThousand\Bundle\NineThousandJobqueueBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Param;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Arg;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Tag;
 use NineThousand\Bundle\NineThousandJobqueueBundle\Form\JobType;
 
 /**
@@ -57,6 +60,9 @@ class JobController extends Controller
     public function newAction()
     {
         $entity = new Job();
+        $entity->setParams(array(new Param()));
+        $entity->setArgs(array(new Arg()));
+        $entity->setTags(array(new Tag()));
         $form   = $this->createForm(new JobType(), $entity);
 
         return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
@@ -71,7 +77,10 @@ class JobController extends Controller
      */
     public function createAction()
     {
-        $entity  = new Job();
+        $entity = new Job();
+        $entity->setParams(array(new Param()));
+        $entity->setArgs(array(new Arg()));
+        $entity->setTags(array(new Tag()));
         $request = $this->getRequest();
         $form    = $this->createForm(new JobType(), $entity);
 

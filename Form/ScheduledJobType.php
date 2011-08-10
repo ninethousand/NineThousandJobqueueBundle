@@ -25,6 +25,6 @@ class ScheduledJobType extends AbstractType
 
     public function getName()
     {
-        return 'ninethousand_bundle_ninethousandjobqueuebundle_jobtype';
+        return 'jobqueue_scheduled_job';
     }
 }
