@@ -51,7 +51,7 @@ class Param
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Job", inversedBy="params", cascade={"all"}, fetch="EAGER")
      */
     protected $job;
         
@@ -121,7 +121,7 @@ class Param
     /**
      * @ORM\Column(type="integer")
      */
-    protected $active;
+    protected $active = 1;
         
         /**
          * @return int

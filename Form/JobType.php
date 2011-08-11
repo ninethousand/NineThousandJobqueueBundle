@@ -15,23 +15,39 @@ class JobType extends AbstractType
 
         $builder
             ->add('retry',     'choice', array(
-                    'choices'   => array('1' => 'Yes', '0' => 'No'),
-                    'expanded'  => true,
-                    'required'  => true))
+                    'choices'    => array('1' => 'Yes', '0' => 'No'),
+                    'expanded'   => true,
+                    'required'   => true,
+                ))
             ->add('cooldown',  'integer', array(
-                    'label'     => 'Retry Cooldown (in seconds)',
-                    'required'  => false))
+                    'label'      => 'Retry Cooldown (in seconds)',
+                    'required'   => false,
+                ))
             ->add('maxRetries', 'integer', array(
-                    'label'     => 'Maximum Retries',
-                    'required'  => false))
+                    'label'      => 'Maximum Retries',
+                    'required'   => false,
+                ))
             ->add('executable', 'text', array(
-                    'label'     => 'Executable (Include Path)',
-                    'required'  => true))
+                    'label'      => 'Executable (Include Path)',
+                    'required'   => true,
+                ))
             ->add('_token', 'csrf')
-            ->add('params', 'collection', array('type' => new ParamType()))
-            ->add('args', 'collection', array('type' => new ArgType()))
-            ->add('tags', 'collection', array('type' => new TagType()))
-        ;
+            ->add('params', 'collection', array(
+                    'type'          => new ParamType(),
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
+                ))
+            ->add('args', 'collection', array(
+                    'type'          => new ArgType(),
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
+                ))
+            ->add('tags', 'collection', array(
+                    'type'          => new TagType(),
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
+                ))
+            ;
         
         if (isset($options['jobcontrol']['type_mapping']) && !empty($options['jobcontrol']['type_mapping'])) {
             $list = array();

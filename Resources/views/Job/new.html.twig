@@ -3,7 +3,7 @@
  {% block body %}
  <script>
     $(function() {
-        $( "button", "#newjob form" ).button();
+        $( "button", "#editjob form" ).button();
         $('#btnParamDel').attr('disabled', true);
         $('#btnArgDel').attr('disabled','disabled');
         $('#btnTagDel').attr('disabled','disabled');
@@ -18,8 +18,8 @@
             // manipulate the name/id values of the input inside the new element
             paramKeyInput = newElem.children(':first').children('.paramkey').children('input');
             paramValueInput = newElem.children(':first').children('.paramval').children('input');
-            paramKeyInput.attr('id', 'jobqueue_job_params_' + newNum + '_key').attr('name', 'jobqueue_job[params][' + newNum + '][key]');
-            paramValueInput.attr('id', 'jobqueue_job_params_' + newNum + '_value').attr('name', 'jobqueue_job[params][' + newNum + '][value]');
+            paramKeyInput.attr('id', 'jobqueue_job_params_' + newNum + '_key').attr('name', 'jobqueue_job[params][' + newNum + '][key]').attr('value', '');
+            paramValueInput.attr('id', 'jobqueue_job_params_' + newNum + '_value').attr('name', 'jobqueue_job[params][' + newNum + '][value]').attr('value', '');
  
             // insert the new element after the last "duplicatable" input field
             $('#param' + num).after(newElem);
@@ -46,7 +46,7 @@
             var newElem = $('#arg' + num).clone().attr('id', 'arg' + newNum);
  
             // manipulate the name/id values of the input inside the new element
-            newElem.children(':first').children('input').attr('id', 'jobqueue_job_args_' + newNum + '_value').attr('name', 'jobqueue_job[args][' + newNum + '][value]');
+            newElem.children(':first').children('input').attr('id', 'jobqueue_job_args_' + newNum + '_value').attr('name', 'jobqueue_job[args][' + newNum + '][value]').attr('value', '');
  
             // insert the new element after the last "duplicatable" input field
             $('#arg' + num).after(newElem);
@@ -73,7 +73,7 @@
             var newElem = $('#tag' + num).clone().attr('id', 'tag' + newNum);
  
             // manipulate the name/id values of the input inside the new element
-            newElem.children(':first').children('input').attr('id', 'jobqueue_job_tags_' + newNum + '_value').attr('name', 'jobqueue_job[tags][' + newNum + '][value]');
+            newElem.children(':first').children('input').attr('id', 'jobqueue_job_tags_' + newNum + '_value').attr('name', 'jobqueue_job[tags][' + newNum + '][value]').attr('value', '');
  
             // insert the new element after the last "duplicatable" input field
             $('#tag' + num).after(newElem);
@@ -93,8 +93,8 @@
         });
     });
   </script>
-  <div id="newjob" >
-    <form action="{{ path('jobqueue_job_create') }}" method="post" {{ form_enctype(form) }}>
+  <div id="editjob" >
+    <form action="{{ action }}" method="post" {{ form_enctype(form) }}>
         <div id="errors">
             {{ form_errors(form) }}
         </div>
@@ -162,4 +162,19 @@
         </div>
     </form>
  </div>
+ {% if delete_form is defined %}
+ <ul class="record_actions">
+     <li>
+         <a href="{{ path('jobqueue_job') }}">
+             Back to the list
+         </a>
+     </li>
+     <li>
+         <form action="{{ path('jobqueue_job_delete', { 'id': entity.id }) }}" method="post">
+             {{ form_widget(delete_form) }}
+             <button type="submit">Delete</button>
+         </form>
+     </li>
+ </ul>
+ {% endif %}
  {% endblock %}

@@ -51,7 +51,7 @@ class Arg
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Job", inversedBy="args", cascade={"all"}, fetch="EAGER")
      */
     protected $job;
     
@@ -99,7 +99,7 @@ class Arg
     /**
      * @ORM\Column(type="integer")
      */
-    protected $active;
+    protected $active = 1;
     
         /**
          * @return int

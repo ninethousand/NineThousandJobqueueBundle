@@ -282,7 +282,7 @@ class Job
     /**
      * @ORM\Column(type="integer")
      */
-    protected $active;
+    protected $active = 1;
 
         /**
          * @return int
@@ -345,11 +345,7 @@ class Job
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Param", cascade={"all"})
-     * @ORM\JoinTable(name="jobqueue_job_param",
-     *      joinColumns={@ORM\JoinColumn(name="job_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="param_id", referencedColumnName="id", unique=true)}
-     *      )
+     * @ORM\OneToMany(targetEntity="Param", mappedBy="job", cascade={"all"})
      */
     protected $params;
 
@@ -371,11 +367,7 @@ class Job
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Arg", cascade={"all"})
-     * @ORM\JoinTable(name="jobqueue_job_arg",
-     *      joinColumns={@ORM\JoinColumn(name="job_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="arg_id", referencedColumnName="id", unique=true)}
-     *      )
+     * @ORM\OneToMany(targetEntity="Arg", mappedBy="job", cascade={"all"})
      */
     protected $args;
     
@@ -440,5 +432,35 @@ class Job
         {
             $this->history = $history;
         }
+        
+    /*
+     * Removes all members from the params collection
+     */
+    public function unsetParams()
+    {
+        unset($this->params);
+        $this->params = new ArrayCollection();
+        return $this;
+    }
+    
+    /*
+     * Removes all members from the args collection
+     */
+    public function unsetArgs()
+    {
+        unset($this->args);
+        $this->args = new ArrayCollection();
+        return $this;
+    }
+    
+    /*
+     * Removes all members from the tags collection
+     */
+    public function unsetTags()
+    {
+        unset($this->tags);
+        $this->tags = new ArrayCollection();
+        return $this;
+    }
 
 }

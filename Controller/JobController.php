@@ -10,6 +10,10 @@ use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Arg;
 use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Tag;
 use NineThousand\Bundle\NineThousandJobqueueBundle\Form\JobType;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Form;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Job controller.
  *
@@ -60,15 +64,41 @@ class JobController extends Controller
     public function newAction()
     {
         $entity = new Job();
-        $entity->setParams(array(new Param()));
-        $entity->setArgs(array(new Arg()));
-        $entity->setTags(array(new Tag()));
         $form   = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
 
         return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form'   => $form->createView(),
+            'action' => $this->generateUrl('jobqueue_job_create'),
         ));
+    }
+    
+    /**
+     * Removes dynamically submitted objects that shouldn't be persisted.
+     * @param Symfony\Component\Form\Form $form
+     * @param obj $entity
+     * @param Symfony\Component\HttpFoundation\Request $request
+     * @param Array $collections
+     */
+    public function sanitizeCollections(Form &$form, &$entity, Request &$request, Array $collections) {
+        $formName = $form->getName();
+        $submission = $request->request->get($formName);
+        foreach ($collections as $collection => $fields) {
+            $total = count($submission[$collection])+1;
+            for ($i = 0; $i < $total; $i++) {
+                foreach ($fields as $field) {
+                    if (empty($submission[$collection][$i][$field])) {
+                        unset($submission[$collection][$i]);
+                        break;
+                    }
+                }
+                if (empty($submission[$collection])) {
+                    $entity->set{ucwords($collection)} = new ArrayCollection();
+                }
+            }
+        }
+        $request->request->set($formName, $submission);
+        $form->setData($entity);
     }
 
     /**
@@ -78,13 +108,17 @@ class JobController extends Controller
     public function createAction()
     {
         $entity = new Job();
-        $entity->setParams(array(new Param()));
-        $entity->setArgs(array(new Arg()));
-        $entity->setTags(array(new Tag()));
         $request = $this->getRequest();
         $form    = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
 
         if ('POST' === $request->getMethod()) {
+            
+            $this->sanitizeCollections($form, $entity, $request, array(
+                'params' => array('key','value'),
+                'args'   => array('value'),
+                'tags'   => array('value'),
+            ));
+            
             $form->bindRequest($request);
 
             if ($form->isValid()) {
@@ -100,7 +134,8 @@ class JobController extends Controller
 
         return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form'   => $form->createView(),
+            'action' => $this->generateUrl('jobqueue_job_create'),
         ));
     }
 
@@ -118,13 +153,14 @@ class JobController extends Controller
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
 
-        $editForm = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
+        $form   = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('NineThousandJobqueueBundle:Job:edit.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'        => $form->createView(),
             'delete_form' => $deleteForm->createView(),
+            'action'      => $this->generateUrl('jobqueue_job_update', array('id' => $id)),
         ));
     }
 
@@ -137,20 +173,20 @@ class JobController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('NineThousandJobqueueBundle:Job')->find($id);
-
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
 
-        $editForm   = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
+        $form   = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
         if ('POST' === $request->getMethod()) {
-            $editForm->bindRequest($request);
+            $form->bindRequest($request);
 
-            if ($editForm->isValid()) {
+            if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($entity);
                 $em->flush();
@@ -159,10 +195,11 @@ class JobController extends Controller
             }
         }
 
-        return $this->render('NineThousandJobqueueBundle:Job:edit.html.twig', array(
+        return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'        => $form->createView(),
             'delete_form' => $deleteForm->createView(),
+            'action'      => $this->generateUrl('jobqueue_job_update', array('id' => $id)),
         ));
     }
 

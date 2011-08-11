@@ -51,7 +51,7 @@ class Tag
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToMany(targetEntity="Job", mappedBy="tags")
      */
     protected $job;
         
@@ -99,7 +99,7 @@ class Tag
     /**
      * @ORM\Column(type="integer")
      */
-    protected $active;
+    protected $active = 1;
         
         /**
          * @return int
