@@ -10,10 +10,12 @@ class ParamType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('job')
-            ->add('key')
-            ->add('value')
-            ->add('active')
+            ->add('key', 'text', array(
+                    'label'     => 'Parameter Key',
+                    'required'  => false))
+            ->add('value', 'text', array(
+                    'label'     => 'Parameter Value',
+                    'required'  => false))
         ;
     }
     

@@ -10,9 +10,9 @@ class ArgType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('job')
-            ->add('value')
-            ->add('active')
+            ->add('value', 'text', array(
+                    'label'     => 'Arg',
+                    'required'  => false))
         ;
     }
     

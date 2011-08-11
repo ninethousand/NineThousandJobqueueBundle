@@ -345,7 +345,7 @@ class Job
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Param")
+     * @ORM\ManyToMany(targetEntity="Param", cascade={"all"})
      * @ORM\JoinTable(name="jobqueue_job_param",
      *      joinColumns={@ORM\JoinColumn(name="job_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="param_id", referencedColumnName="id", unique=true)}
@@ -371,7 +371,7 @@ class Job
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Arg")
+     * @ORM\ManyToMany(targetEntity="Arg", cascade={"all"})
      * @ORM\JoinTable(name="jobqueue_job_arg",
      *      joinColumns={@ORM\JoinColumn(name="job_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="arg_id", referencedColumnName="id", unique=true)}
@@ -396,7 +396,7 @@ class Job
         }
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag")
+     * @ORM\ManyToMany(targetEntity="Tag", cascade={"all"})
      * @ORM\JoinTable(name="jobqueue_job_tag",
      *      joinColumns={@ORM\JoinColumn(name="job_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id", unique=true)}

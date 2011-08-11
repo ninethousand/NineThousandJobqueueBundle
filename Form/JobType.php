@@ -12,23 +12,47 @@ class JobType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
+
         $builder
-            ->add('retry')
-            ->add('cooldown')
-            ->add('maxRetries')
-            ->add('executable')
-            ->add('type')
+            ->add('retry',     'choice', array(
+                    'choices'   => array('1' => 'Yes', '0' => 'No'),
+                    'expanded'  => true,
+                    'required'  => true))
+            ->add('cooldown',  'integer', array(
+                    'label'     => 'Retry Cooldown (in seconds)',
+                    'required'  => false))
+            ->add('maxRetries', 'integer', array(
+                    'label'     => 'Maximum Retries',
+                    'required'  => false))
+            ->add('executable', 'text', array(
+                    'label'     => 'Executable (Include Path)',
+                    'required'  => true))
+            ->add('_token', 'csrf')
             ->add('params', 'collection', array('type' => new ParamType()))
             ->add('args', 'collection', array('type' => new ArgType()))
             ->add('tags', 'collection', array('type' => new TagType()))
         ;
+        
+        if (isset($options['jobcontrol']['type_mapping']) && !empty($options['jobcontrol']['type_mapping'])) {
+            $list = array();
+            foreach ($options['jobcontrol']['type_mapping'] as $key => $val) {
+                $list[$key] = $key;
+            }
+            $builder->add('type', 'choice', array(
+                'choices'   => $list,
+                'required'  => true,
+            ));
+        }
     }
     
     public function getDefaultOptions(array $options)
     {
-        return array(
+        return array_merge($options, array(
             'data_class' => 'NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job',
-        );
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'intention'       => 'jobqueue_job_nekot',
+        ));
     }
 
     public function getName()

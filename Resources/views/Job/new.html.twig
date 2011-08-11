@@ -16,8 +16,8 @@
             var newElem = $('#param' + num).clone().attr('id', 'param' + newNum);
  
             // manipulate the name/id values of the input inside the new element
-            paramKeyInput = newElem.children(':first').children('span').children('input');
-            paramValueInput = newElem.children(':last').children('span').children('input');
+            paramKeyInput = newElem.children(':first').children('.paramkey').children('input');
+            paramValueInput = newElem.children(':first').children('.paramval').children('input');
             paramKeyInput.attr('id', 'jobqueue_job_params_' + newNum + '_key').attr('name', 'jobqueue_job[params][' + newNum + '][key]');
             paramValueInput.attr('id', 'jobqueue_job_params_' + newNum + '_value').attr('name', 'jobqueue_job[params][' + newNum + '][value]');
  
@@ -37,11 +37,67 @@
                 $('#btnParamDel').attr('disabled', true);
             return false;
         });
+        
+        $('#btnArgAdd').click(function() {
+            var num     = $('.argItem').length; // how many "duplicatable" input fields we currently have
+            var newNum  = new Number(num + 1);      // the numeric ID of the new input field being added
+ 
+            // create the new element via clone(), and manipulate it's ID using newNum value
+            var newElem = $('#arg' + num).clone().attr('id', 'arg' + newNum);
+ 
+            // manipulate the name/id values of the input inside the new element
+            newElem.children(':first').children('input').attr('id', 'jobqueue_job_args_' + newNum + '_value').attr('name', 'jobqueue_job[args][' + newNum + '][value]');
+ 
+            // insert the new element after the last "duplicatable" input field
+            $('#arg' + num).after(newElem);
+ 
+            // enable the "remove" button
+            $('#btnArgDel').attr('disabled', false);
+            return false;
+        });
+        $('#btnArgDel').click(function() {
+            var num     = $('.argItem').length; // how many "duplicatable" input fields we currently have
+            $('#arg' + num).remove();     // remove the last element
+         
+            // if only one element remains, disable the "remove" button
+            if (num-1 == 1)
+                $('#btnArgDel').attr('disabled', true);
+            return false;
+        });
+        
+        $('#btnTagAdd').click(function() {
+            var num     = $('.tagItem').length; // how many "duplicatable" input fields we currently have
+            var newNum  = new Number(num + 1);      // the numeric ID of the new input field being added
+ 
+            // create the new element via clone(), and manipulate it's ID using newNum value
+            var newElem = $('#tag' + num).clone().attr('id', 'tag' + newNum);
+ 
+            // manipulate the name/id values of the input inside the new element
+            newElem.children(':first').children('input').attr('id', 'jobqueue_job_tags_' + newNum + '_value').attr('name', 'jobqueue_job[tags][' + newNum + '][value]');
+ 
+            // insert the new element after the last "duplicatable" input field
+            $('#tag' + num).after(newElem);
+ 
+            // enable the "remove" button
+            $('#btnTagDel').attr('disabled', false);
+            return false;
+        });
+        $('#btnTagDel').click(function() {
+            var num     = $('.tagItem').length; // how many "duplicatable" input fields we currently have
+            $('#tag' + num).remove();     // remove the last element
+         
+            // if only one element remains, disable the "remove" button
+            if (num-1 == 1)
+                $('#btnTagDel').attr('disabled', true);
+            return false;
+        });
     });
   </script>
   <div id="newjob" >
-
     <form action="{{ path('jobqueue_job_create') }}" method="post" {{ form_enctype(form) }}>
+        <div id="errors">
+            {{ form_errors(form) }}
+        </div>
         <div id="job">
         <h2> Job Information</h2>
         {{ form_row(form.type) }}
@@ -60,8 +116,8 @@
             <ul>
             {% for param in form.params %}
                 <li id="param1" class="paramItem">
-                    <div><span class="paramkey">{{ form_widget(param.key) }}</span>&#61;<span>{{ form_widget(param.value) }}</span></div>
-                    <div><span class="paramval">{{ form_errors(param.key) }}</span> <span>{{ form_errors(param.value) }}</span></div>
+                    <div><span class="paramkey">{{ form_widget(param.key) }}</span> &#61; <span class="paramval" >{{ form_widget(param.value) }}</span></div>
+                    <div><span >{{ form_errors(param.key) }}</span> <span>{{ form_errors(param.value) }}</span></div>
                 </li>
             {% endfor %}
             </ul>
@@ -89,7 +145,7 @@
             <h2>Tags</h2>
             <ul>
             {% for tag in form.tags %}
-                <li id="tags1" class="tagItem">
+                <li id="tag1" class="tagItem">
                     <div>{{ form_widget(tag.value) }}</div>
                     <div>{{ form_errors(tag.value) }}</div>
                 </li>
@@ -100,7 +156,8 @@
                 <button id="btnTagDel">remove tag</button>
             </div>
         </div>
-        <div id="submits">
+        <div id="submit">
+            {{ form_row(form._token) }}
             <button type="submit">Save</button>
         </div>
     </form>

@@ -63,7 +63,7 @@ class JobController extends Controller
         $entity->setParams(array(new Param()));
         $entity->setArgs(array(new Arg()));
         $entity->setTags(array(new Tag()));
-        $form   = $this->createForm(new JobType(), $entity);
+        $form   = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
 
         return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(
             'entity' => $entity,
@@ -82,13 +82,13 @@ class JobController extends Controller
         $entity->setArgs(array(new Arg()));
         $entity->setTags(array(new Tag()));
         $request = $this->getRequest();
-        $form    = $this->createForm(new JobType(), $entity);
+        $form    = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                $form->createDate(new \DateTime);
+                $entity->setCreateDate(new \DateTime);
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($entity);
                 $em->flush();
@@ -118,7 +118,7 @@ class JobController extends Controller
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
 
-        $editForm = $this->createForm(new JobType(), $entity);
+        $editForm = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('NineThousandJobqueueBundle:Job:edit.html.twig', array(
@@ -142,7 +142,7 @@ class JobController extends Controller
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
 
-        $editForm   = $this->createForm(new JobType(), $entity);
+        $editForm   = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
