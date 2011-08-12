@@ -51,7 +51,7 @@ class Arg
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Job", inversedBy="args", cascade={"all"}, fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Job", inversedBy="args")
      */
     protected $job;
     

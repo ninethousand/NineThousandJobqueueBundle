@@ -17,6 +17,8 @@ namespace NineThousand\Bundle\NineThousandJobqueueBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Param;
+use NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Arg;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -345,7 +347,7 @@ class Job
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Param", mappedBy="job", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Param", mappedBy="job", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $params;
 
@@ -365,9 +367,14 @@ class Job
             $this->params = $params;
         }
 
+        public function addParam(Param $param) {
+            $this->params[] = $param;
+            $param->setJob($this);
+        }
+
 
     /**
-     * @ORM\OneToMany(targetEntity="Arg", mappedBy="job", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Arg", mappedBy="job", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $args;
     
@@ -386,9 +393,14 @@ class Job
         {
             $this->args = $args;
         }
+        
+        public function addArg(Arg $arg) {
+            $this->args[] = $arg;
+            $arg->setJob($this);
+        }
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="jobqueue_job_tag",
      *      joinColumns={@ORM\JoinColumn(name="job_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id", unique=true)}
@@ -432,35 +444,5 @@ class Job
         {
             $this->history = $history;
         }
-        
-    /*
-     * Removes all members from the params collection
-     */
-    public function unsetParams()
-    {
-        unset($this->params);
-        $this->params = new ArrayCollection();
-        return $this;
-    }
-    
-    /*
-     * Removes all members from the args collection
-     */
-    public function unsetArgs()
-    {
-        unset($this->args);
-        $this->args = new ArrayCollection();
-        return $this;
-    }
-    
-    /*
-     * Removes all members from the tags collection
-     */
-    public function unsetTags()
-    {
-        unset($this->tags);
-        $this->tags = new ArrayCollection();
-        return $this;
-    }
 
 }

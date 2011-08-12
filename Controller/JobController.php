@@ -64,6 +64,9 @@ class JobController extends Controller
     public function newAction()
     {
         $entity = new Job();
+        $entity->setParams(array(new Param()));
+        $entity->setArgs(array(new Arg()));
+        $entity->setTags(array(new Tag()));
         $form   = $this->createForm(new JobType(), $entity, $this->container->getParameter('jobqueue.adapter.options'));
 
         return $this->render('NineThousandJobqueueBundle:Job:new.html.twig', array(

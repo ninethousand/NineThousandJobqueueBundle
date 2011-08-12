@@ -1,14 +1,16 @@
  {% extends app.request.isXmlHttpRequest() ? 'NineThousandJobqueueBundle::ajax.html.twig' : 'NineThousandJobqueueBundle::layout.html.twig' %}
  {% block title "Jobs" %}
+ 
  {% block body %}
  <script>
+ 
     $(function() {
         $( "button", "#editjob form" ).button();
-        $('#btnParamDel').attr('disabled', true);
-        $('#btnArgDel').attr('disabled','disabled');
-        $('#btnTagDel').attr('disabled','disabled');
+        $('.btnParamDel').attr('disabled', true);
+        $('.btnArgDel').attr('disabled','disabled');
+        $('.btnTagDel').attr('disabled','disabled');
         
-        $('#btnParamAdd').click(function() {
+        $('#btnParamAdd').live('click',function() {
             var num     = $('.paramItem').length; // how many "duplicatable" input fields we currently have
             var newNum  = new Number(num + 1);      // the numeric ID of the new input field being added
  
@@ -16,8 +18,8 @@
             var newElem = $('#param' + num).clone().attr('id', 'param' + newNum);
  
             // manipulate the name/id values of the input inside the new element
-            paramKeyInput = newElem.children(':first').children('.paramkey').children('input');
-            paramValueInput = newElem.children(':first').children('.paramval').children('input');
+            var paramKeyInput = newElem.children(':first').children('.paramkey').children('input');
+            var paramValueInput = newElem.children(':first').children('.paramval').children('input');
             paramKeyInput.attr('id', 'jobqueue_job_params_' + newNum + '_key').attr('name', 'jobqueue_job[params][' + newNum + '][key]').attr('value', '');
             paramValueInput.attr('id', 'jobqueue_job_params_' + newNum + '_value').attr('name', 'jobqueue_job[params][' + newNum + '][value]').attr('value', '');
  
@@ -25,20 +27,26 @@
             $('#param' + num).after(newElem);
  
             // enable the "remove" button
-            $('#btnParamDel').attr('disabled', false);
+            $('.btnParamDel').attr('disabled', false);
             return false;
         });
-        $('#btnParamDel').click(function() {
-            var num     = $('.paramItem').length; // how many "duplicatable" input fields we currently have
-            $('#param' + num).remove();     // remove the last element
-         
-            // if only one element remains, disable the "remove" button
-            if (num-1 == 1)
-                $('#btnParamDel').attr('disabled', true);
+        $('.btnParamDel').live('click',function() {
+            $(this).parents("li:first").remove();
+            $('.paramItem').each(function(index) {
+                newNum = index+1;
+                $(this).attr('id', 'param' + newNum);
+                var paramKeyInput = $(this).children(':first').children('.paramkey').children('input');
+                var paramValueInput = $(this).children(':first').children('.paramval').children('input');
+                paramKeyInput.attr('id', 'jobqueue_job_params_' + newNum + '_key').attr('name', 'jobqueue_job[params][' + newNum + '][key]');
+                paramValueInput.attr('id', 'jobqueue_job_params_' + newNum + '_value').attr('name', 'jobqueue_job[params][' + newNum + '][value]');
+             });
+            if ($('.paramItem').length == 1) {
+                $('.btnParamDel').attr('disabled', true);
+            }
             return false;
         });
         
-        $('#btnArgAdd').click(function() {
+        $('#btnArgAdd').live('click',function() {
             var num     = $('.argItem').length; // how many "duplicatable" input fields we currently have
             var newNum  = new Number(num + 1);      // the numeric ID of the new input field being added
  
@@ -52,16 +60,19 @@
             $('#arg' + num).after(newElem);
  
             // enable the "remove" button
-            $('#btnArgDel').attr('disabled', false);
+            $('.btnArgDel').attr('disabled', false);
             return false;
         });
-        $('#btnArgDel').click(function() {
-            var num     = $('.argItem').length; // how many "duplicatable" input fields we currently have
-            $('#arg' + num).remove();     // remove the last element
-         
-            // if only one element remains, disable the "remove" button
-            if (num-1 == 1)
-                $('#btnArgDel').attr('disabled', true);
+        $('.btnArgDel').live('click',function() {
+            $(this).parents("li:first").remove();
+            $('.argItem').each(function(index) {
+                newNum = index+1;
+                $(this).attr('id', 'arg' + newNum);
+                $(this).children(':first').children('input').attr('id', 'jobqueue_job_args_' + newNum + '_value').attr('name', 'jobqueue_job[args][' + newNum + '][value]');
+             });
+            if ($('.argItem').length == 1) {
+                $('.btnArgDel').attr('disabled', true);
+            }
             return false;
         });
         
@@ -79,16 +90,19 @@
             $('#tag' + num).after(newElem);
  
             // enable the "remove" button
-            $('#btnTagDel').attr('disabled', false);
+            $('.btnTagDel').attr('disabled', false);
             return false;
         });
-        $('#btnTagDel').click(function() {
-            var num     = $('.tagItem').length; // how many "duplicatable" input fields we currently have
-            $('#tag' + num).remove();     // remove the last element
-         
-            // if only one element remains, disable the "remove" button
-            if (num-1 == 1)
-                $('#btnTagDel').attr('disabled', true);
+        $('.btnTagDel').live('click',function() {
+            $(this).parents("li:first").remove();
+            $('.tagItem').each(function(index) {
+                newNum = index+1;
+                $(this).attr('id', 'tag' + newNum);
+                $(this).children(':first').children('input').attr('id', 'jobqueue_job_args_' + newNum + '_value').attr('name', 'jobqueue_job[args][' + newNum + '][value]');
+             });
+            if ($('.tagItem').length == 1) {
+                $('.btnTagDel').attr('disabled', true);
+            }
             return false;
         });
     });
@@ -116,14 +130,13 @@
             <ul>
             {% for param in form.params %}
                 <li id="param1" class="paramItem">
-                    <div><span class="paramkey">{{ form_widget(param.key) }}</span> &#61; <span class="paramval" >{{ form_widget(param.value) }}</span></div>
+                    <div><span class="paramkey">{{ form_widget(param.key) }}</span> &#61; <span class="paramval" >{{ form_widget(param.value) }}</span><span><button class="btnParamDel">remove</button></span></div>
                     <div><span >{{ form_errors(param.key) }}</span> <span>{{ form_errors(param.value) }}</span></div>
-                </li>
+                </li> 
             {% endfor %}
             </ul>
             <div>
                 <button id="btnParamAdd">add another param</button>
-                <button id="btnParamDel">remove param</button>
             </div>
         </div>
         <div id="args">
@@ -131,14 +144,13 @@
             <ul>
             {% for arg in form.args %}
                 <li id="arg1" class="argItem">
-                    <div>{{ form_widget(arg.value) }}</div>
+                    <div>{{ form_widget(arg.value) }} <button class="btnArgDel">remove arg</button></div>
                     <div>{{ form_errors(arg.value) }}</div>
                 </li>
             {% endfor %}
             </ul>
             <div>
                 <button id="btnArgAdd">add another arg</button>
-                <button id="btnArgDel">remove arg</button>
             </div>
         </div>
         <div id="tags">
@@ -146,14 +158,13 @@
             <ul>
             {% for tag in form.tags %}
                 <li id="tag1" class="tagItem">
-                    <div>{{ form_widget(tag.value) }}</div>
+                    <div>{{ form_widget(tag.value) }} <button class="btnTagDel">remove tag</button></div>
                     <div>{{ form_errors(tag.value) }}</div>
                 </li>
             {% endfor %}
             </ul>
             <div>
                 <button id="btnTagAdd">add another tag</button>
-                <button id="btnTagDel">remove tag</button>
             </div>
         </div>
         <div id="submit">

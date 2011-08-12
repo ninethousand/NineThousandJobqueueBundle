@@ -51,7 +51,7 @@ class Param
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Job", inversedBy="params", cascade={"all"}, fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Job", inversedBy="params")
      */
     protected $job;
         
