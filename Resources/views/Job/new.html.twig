@@ -6,6 +6,7 @@
  
     $(function() {
         $( "button", "#editjob form" ).button();
+        $( ".record_action" ).buttonset();
         $('.btnParamDel').attr('disabled', true);
         $('.btnArgDel').attr('disabled','disabled');
         $('.btnTagDel').attr('disabled','disabled');
@@ -113,7 +114,32 @@
             {{ form_errors(form) }}
         </div>
         <div id="job">
-        <h2> Job Information</h2>
+        <h2> Edit Job</h2>
+        {% if deactivate_form is defined %}
+        <div class="record_action">
+            <input type="checkbox" id="deactivate_{{ entity.id }}" value="deactivate_form_{{ entity.id }}"  
+                {% if not entity.active  %} disabled="true" {% endif %} 
+                />
+            
+            <label for="deactivate_{{ entity.id }}">Deactivate</label>
+
+	        <input type="checkbox" id="activate_{{ entity.id }}" value="activate_form_{{ entity.id }}" 
+                {% if entity.active  %} disabled="true" {% endif %}
+                />
+
+	        <label for="activate_{{ entity.id }}">Activate</label>
+
+	        <input type="checkbox" id="retry_{{ entity.id }}" value="retry_form_{{ entity.id }}"
+                {% if entity.active  %} 
+                    disabled="true" 
+                {% elseif entity.retry and entity.attempts < entity.maxRetries %}
+                    disabled="true"
+                {% endif %}
+	            />
+	           
+	        <label for="retry_{{ entity.id }}">Retry</label>
+        </div>
+        {% endif %}
         {{ form_row(form.type) }}
         {{ form_errors(form.type) }}
         {{ form_row(form.executable) }}
@@ -173,19 +199,17 @@
         </div>
     </form>
  </div>
- {% if delete_form is defined %}
- <ul class="record_actions">
-     <li>
-         <a href="{{ path('jobqueue_job') }}">
-             Back to the list
-         </a>
-     </li>
-     <li>
-         <form action="{{ path('jobqueue_job_delete', { 'id': entity.id }) }}" method="post">
-             {{ form_widget(delete_form) }}
-             <button type="submit">Delete</button>
-         </form>
-     </li>
- </ul>
+ {% if deactivate_form is defined %}
+ <div class="record_action_forms">
+      <form action="{{ path('jobqueue_job_deactivate', { 'id': entity.id }) }}" method="post" name="deactivate_form_{{ entity.id }}">
+        {{ form_widget(deactivate_form) }}
+      </form>
+      <form action="{{ path('jobqueue_job_activate', { 'id': entity.id }) }}" method="post" name="activate_form_{{ entity.id }}">
+        {{ form_widget(activate_form) }}
+      </form>
+      <form action="{{ path('jobqueue_job_retry', { 'id': entity.id }) }}" method="post" name="retry_form_{{ entity.id }}">
+        {{ form_widget(retry_form) }}
+      </form>
+  </div>
  {% endif %}
  {% endblock %}

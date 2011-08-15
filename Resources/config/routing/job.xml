@@ -30,8 +30,18 @@
         <requirement key="_method">post</requirement>
     </route>
 
-    <route id="jobqueue_job_delete" pattern="/{id}/delete">
-        <default key="_controller">NineThousandJobqueueBundle:Job:delete</default>
+    <route id="jobqueue_job_deactivate" pattern="/{id}/deactivate">
+        <default key="_controller">NineThousandJobqueueBundle:Job:deactivate</default>
+        <requirement key="_method">post</requirement>
+    </route>
+    
+    <route id="jobqueue_job_activate" pattern="/{id}/activate">
+        <default key="_controller">NineThousandJobqueueBundle:Job:activate</default>
+        <requirement key="_method">post</requirement>
+    </route>
+    
+    <route id="jobqueue_job_retry" pattern="/{id}/retry">
+        <default key="_controller">NineThousandJobqueueBundle:Job:retry</default>
         <requirement key="_method">post</requirement>
     </route>
 

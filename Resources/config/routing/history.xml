@@ -4,9 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="jobqueue_history" pattern="/{page}">
+    <route id="jobqueue_history" pattern="/">
         <default key="_controller">NineThousandJobqueueBundle:History:index</default>
-        <default key="page">1</default>
     </route>
-
 </routes>

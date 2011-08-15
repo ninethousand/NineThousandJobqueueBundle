@@ -11,7 +11,4 @@
     <import resource="@NineThousandJobqueueBundle/Resources/config/routing/history.xml" prefix="/history" />
     <import resource="@NineThousandJobqueueBundle/Resources/config/routing/job.xml" prefix="/job" />
     <import resource="@NineThousandJobqueueBundle/Resources/config/routing/scheduledjob.xml" prefix="/scheduledjob" />
-    <import resource="@NineThousandJobqueueBundle/Resources/config/routing/arg.xml" prefix="/arg" />
-    <import resource="@NineThousandJobqueueBundle/Resources/config/routing/param.xml" prefix="/param" />
-    <import resource="@NineThousandJobqueueBundle/Resources/config/routing/tag.xml" prefix="/tag" />
 </routes>

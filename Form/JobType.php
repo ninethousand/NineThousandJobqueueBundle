@@ -28,7 +28,7 @@ class JobType extends AbstractType
                     'required'   => false,
                 ))
             ->add('executable', 'text', array(
-                    'label'      => 'Executable (Include Path)',
+                    'label'      => 'Executable (Full Path)',
                     'required'   => true,
                 ))
             ->add('_token', 'csrf')

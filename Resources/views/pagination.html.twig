@@ -9,19 +9,19 @@
  <div class="pagination" >
     <ul>
         <li>
-            <a title="First Page" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}=1">First</a>
+            <a title="First Page" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}=1{{ pagination.query }}">First</a>
         </li>
         {% for p in pagination.pages %}
         <li>
         {% if p == pagination.current %}
             <button>{{ p }}</button>
             {% else %}
-            <a title="Page {{ p }}" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}={{ p }}">{{ p }}</a>
+            <a title="Page {{ p }}" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}={{ p }}{{ pagination.query }}">{{ p }}</a>
             {% endif %}
         </li>
         {% endfor %}
         <li>
-            <a title="Last Page" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}={{ pagination.last }}">Last</a>
+            <a title="Last Page" href="{{ path(app.request.attributes.get('_route')) }}?{{ pagination.param }}={{ pagination.last }}{{ pagination.query }}">Last</a>
         </li>
     </ul>
  </div>

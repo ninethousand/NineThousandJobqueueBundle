@@ -1,61 +1,84 @@
-<h1>Job list</h1>
+ {% extends app.request.isXmlHttpRequest() ? 'NineThousandJobqueueBundle::ajax.html.twig' : 'NineThousandJobqueueBundle::layout.html.twig' %}
+ {% block title "Jobs" %}
+ 
+ {% block body %}
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Retry</th>
-            <th>Cooldown</th>
-            <th>Maxretries</th>
-            <th>Attempts</th>
-            <th>Executable</th>
-            <th>Type</th>
-            <th>Status</th>
-            <th>Createdate</th>
-            <th>Lastrundate</th>
-            <th>Active</th>
-            <th>Schedule</th>
-            <th>Parent</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('jobqueue_scheduledjob_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.name }}</td>
-            <td>{{ entity.retry }}</td>
-            <td>{{ entity.cooldown }}</td>
-            <td>{{ entity.maxRetries }}</td>
-            <td>{{ entity.attempts }}</td>
-            <td>{{ entity.executable }}</td>
-            <td>{{ entity.type }}</td>
-            <td>{{ entity.status }}</td>
-            <td>{{ entity.createDate|date('Y-m-d H:i:s') }}</td>
-            <td>{{ entity.lastrunDate|date('Y-m-d H:i:s') }}</td>
-            <td>{{ entity.active }}</td>
-            <td>{{ entity.schedule }}</td>
-            <td>{{ entity.parent }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('jobqueue_scheduledjob_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('jobqueue_scheduledjob_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+
+<script>
+ 
+    $(function() {
+        $( ".record_action" ).buttonset();
+        $( ".submenu" ).buttonset();
+        $( ".jobid" ).button();
+        
+    });
+</script>
+<div id="jobs">
+    {% if not app.request.isXmlHttpRequest() %}
+        <h1 >Scheduled Job List</h1>
+    {% endif %}
+    {% if not app.request.isXmlHttpRequest() and pagination.last > 1 %}
+        {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
+    {% endif %}
+
+    <ul>
+        <li class="submenu">
+            <a href="{{ path('jobqueue_scheduledjob_new') }}">Create a new Job</a>
+        </li>
+    </ul>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Executable</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Lastrundate</th>
+                <th>Schedule</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a class="jobid" title="{{ entity.id }}" href="{{ path('jobqueue_scheduledjob_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                <td>{{ entity.executable }}</td>
+                <td>{{ entity.type }}</td>
+                <td>{{ entity.status }}</td>
+                <td>{{ entity.lastrunDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ entity.schedule }}</td>
+                <td>
+                    <div class="record_action">
+                        <input type="checkbox" id="edit_{{ entity.id }}" value="{{ path('jobqueue_scheduledjob_edit', { 'id': entity.id }) }}" />
+                
+                        <label for="edit_{{ entity.id }}">Edit</label>
+                        
+                        <input type="checkbox" id="deactivate_{{ entity.id }}" value="deactivate_form_{{ entity.id }}" />
+                
+                        <label for="deactivate_{{ entity.id }}">Deactivate</label>
+
+                    </div>
+                    <div class="record_action_forms">
+                        <form action="{{ path('jobqueue_scheduledjob_deactivate', { 'id': entity.id }) }}" method="post" name="deactivate_form_{{ entity.id }}">
+                            {% set deactivate_form = forms[entity.id]['deactivate_form'] %}
+                            {{ form_widget(deactivate_form) }}
+                        </form>
+                    </div>
+                </td>
+         </tr>
+         <tr>
+            <td colspan="7" class="hidden">
+                <div class="jobdetails"></div>
+                <div class="jobhistory"></div>
             </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+         </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if not app.request.isXmlHttpRequest() and pagination.last > 1 %}
+        {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
+    {% endif %}
+</div>
 
-<ul>
-    <li>
-        <a href="{{ path('jobqueue_scheduledjob_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+ {% endblock %}

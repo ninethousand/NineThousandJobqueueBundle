@@ -17,7 +17,7 @@
         <!--parameter options -->
         <parameter key="jobqueue.adapter.options" type="collection" >
             <parameter key="job_entity_class" >NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job</parameter>
-            <parameter key="job_adapter_class" >NineThousand\Bundle\NineThousandJobqueueBundle\Vendor\Doctrine\Adapter\Job\DoctrineJobAdapter</parameter>
+            <parameter key="job_adapter_class" >NineThousand\Bundle\NineThousandJobqueueBundle\Vendor\Doctrine\Adapter\Job\Symfony2DoctrineJobAdapter</parameter>
             <parameter key="history_entity_class" >NineThousand\Bundle\NineThousandJobqueueBundle\Entity\History</parameter>
             <parameter key="history_adapter_class" >NineThousand\Jobqueue\Vendor\Doctrine\Adapter\History\DoctrineHistoryAdapter</parameter>
             <parameter key="log_adapter_class" >NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Log\MonologAdapter</parameter>

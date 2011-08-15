@@ -25,7 +25,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Job
  *
  * @ORM\Table(name="jobqueue_job")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="NineThousand\Bundle\NineThousandJobqueueBundle\Repository\JobRepository")
  */
 class Job
 {
@@ -284,7 +284,7 @@ class Job
     /**
      * @ORM\Column(type="integer")
      */
-    protected $active = 1;
+    protected $active = 0;
 
         /**
          * @return int

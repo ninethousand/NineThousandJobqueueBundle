@@ -1,25 +1,42 @@
  {% extends app.request.isXmlHttpRequest() ? 'NineThousandJobqueueBundle::ajax.html.twig' : 'NineThousandJobqueueBundle::layout.html.twig' %}
+ 
  {% block title "Jobqueue History" %}
  {% block body %}
   <div id="history" >
-    <h1 >Jobqueue History</h1>
-    {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
+    {% if not app.request.isXmlHttpRequest() %}
+        <h1 >Job History</h1>
+    {% endif %}
+    {% if not app.request.isXmlHttpRequest() and pagination.last > 1 %}
+        {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
+    {% endif %}
     {% if history.total %}
-            <ul>
+        <table class="history_list">
+            <thead>
+                <tr>
+                    <th>Job id</th>
+                    <th>Job Type</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+        <tbody>
             {% for entry in history %}
-                <li>
-                    <span><strong> Job id </strong> {{ entry.jobId }} </span>
-                    <span><strong> Job Type </strong> {{ entry.jobType }} </span>
-                    <span><strong> Status </strong> {{ entry.status }} </span>
-                    <span><strong> Message </strong> {{ entry.message }} </span>
-                    <span><strong> Job Schedule </strong> {{ entry.jobSchedule }} </span>
-                    <span><strong> Timestamp </strong> {{ entry.timestamp|date("Y-m-d g:ia") }} </span>
-                </li>
+                <tr>
+                    <td>{{ entry.jobId }}</td>
+                    <td>{{ entry.jobType }}</td>
+                    <td>{{ entry.status }}</td>
+                    <td>{{ entry.timestamp|date("Y-m-d g:ia") }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4">{{ entry.message }}</td>
+                </tr>
             {% endfor %}
-            </ul>
+            </table>
         {% else %}
             <p class="emptyhistory"> No jobs found in history </p>
         {% endif %}
  </div>
- {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
+    {% if not app.request.isXmlHttpRequest() and pagination.last > 1 %}
+        {% include "NineThousandJobqueueBundle::pagination.html.twig" %}
+    {% endif %}
  {% endblock %}

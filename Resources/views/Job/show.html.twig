@@ -1,9 +1,55 @@
-<h1>Job</h1>
+ {% extends app.request.isXmlHttpRequest() ? 'NineThousandJobqueueBundle::ajax.html.twig' : 'NineThousandJobqueueBundle::layout.html.twig' %}
+ {% block title "Jobs" %}
+ 
+ {% block body %}
+<script>
+ 
+    $(function() {
+        $( ".record_action" ).buttonset();
+        
+    });
+</script>
 
+ {% if not app.request.isXmlHttpRequest() %}
+  <h1>Job # {{ entity.id }}</h1>
+        <div class="record_action">
+            <input type="checkbox" id="deactivate_{{ entity.id }}" value="deactivate_form_{{ entity.id }}"  
+                {% if not entity.active  %} disabled="true" {% endif %} 
+                />
+            
+            <label for="deactivate_{{ entity.id }}">Deactivate</label>
+
+	        <input type="checkbox" id="activate_{{ entity.id }}" value="activate_form_{{ entity.id }}" 
+                {% if entity.active  %} disabled="true" {% endif %}
+                />
+
+	        <label for="activate_{{ entity.id }}">Activate</label>
+
+	        <input type="checkbox" id="retry_{{ entity.id }}" value="retry_form_{{ entity.id }}"
+                {% if entity.active  %} 
+                    disabled="true" 
+                {% elseif entity.retry and entity.attempts < entity.maxRetries %}
+                    disabled="true"
+                {% endif %}
+	            />
+	           
+	        <label for="retry_{{ entity.id }}">Retry</label>
+        </div>
+ {% endif %}
 <table class="record_properties">
     <tbody>
+        {% if not app.request.isXmlHttpRequest() %}
         <tr>
             <th>Id</th>                <td>{{ entity.id }}</td>        </tr>
+        <tr>
+            <th>Executable</th>                <td>{{ entity.executable }}</td>        </tr>
+        <tr>
+            <th>Type</th>                <td>{{ entity.type }}</td>        </tr>
+        <tr>
+            <th>Status</th>                <td>{{ entity.status }}</td>        </tr>
+        <tr>
+            <th>Parent</th>                <td>{{ entity.parent }}</td>        </tr>
+        {% endif %}
         <tr>
             <th>Name</th>                <td>{{ entity.name }}</td>        </tr>
         <tr>
@@ -15,12 +61,6 @@
         <tr>
             <th>Attempts</th>                <td>{{ entity.attempts }}</td>        </tr>
         <tr>
-            <th>Executable</th>                <td>{{ entity.executable }}</td>        </tr>
-        <tr>
-            <th>Type</th>                <td>{{ entity.type }}</td>        </tr>
-        <tr>
-            <th>Status</th>                <td>{{ entity.status }}</td>        </tr>
-        <tr>
             <th>Createdate</th>                <td>{{ entity.createDate|date('Y-m-d H:i:s') }}</td>        </tr>
         <tr>
             <th>Lastrundate</th>                <td>{{ entity.lastrunDate|date('Y-m-d H:i:s') }}</td>        </tr>
@@ -28,26 +68,21 @@
             <th>Active</th>                <td>{{ entity.active }}</td>        </tr>
         <tr>
             <th>Schedule</th>                <td>{{ entity.schedule }}</td>        </tr>
-        <tr>
-            <th>Parent</th>                <td>{{ entity.parent }}</td>        </tr>
+        
     </tbody>
 </table>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('jobqueue_job') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('jobqueue_job_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('jobqueue_job_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+ {% if not app.request.isXmlHttpRequest() %}
+  <div class="record_action_forms">
+      <form action="{{ path('jobqueue_job_deactivate', { 'id': entity.id }) }}" method="post" name="deactivate_form_{{ entity.id }}">
+        {{ form_widget(deactivate_form) }}
+      </form>
+      <form action="{{ path('jobqueue_job_activate', { 'id': entity.id }) }}" method="post" name="activate_form_{{ entity.id }}">
+        {{ form_widget(activate_form) }}
+      </form>
+      <form action="{{ path('jobqueue_job_retry', { 'id': entity.id }) }}" method="post" name="retry_form_{{ entity.id }}">
+        {{ form_widget(retry_form) }}
+      </form>
+  </div>
+ {% endif %}
+{% endblock %}

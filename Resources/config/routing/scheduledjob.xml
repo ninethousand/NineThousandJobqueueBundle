@@ -29,9 +29,9 @@
         <default key="_controller">NineThousandJobqueueBundle:ScheduledJob:update</default>
         <requirement key="_method">post</requirement>
     </route>
-
-    <route id="jobqueue_scheduledjob_delete" pattern="/{id}/delete">
-        <default key="_controller">NineThousandJobqueueBundle:ScheduledJob:delete</default>
+    
+    <route id="jobqueue_scheduledjob_deactivate" pattern="/{id}/deactivate">
+        <default key="_controller">NineThousandJobqueueBundle:ScheduledJob:deactivate</default>
         <requirement key="_method">post</requirement>
     </route>
 

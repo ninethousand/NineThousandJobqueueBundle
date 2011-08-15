@@ -23,6 +23,12 @@ ul {list-style-type: none; padding-left:0px}
 #wrapper {position: absolute;top:5px;width:99%;margin 0 5px 0 5px;padding 0;}
 #wrapper #rightPanel {float:right; width: 84%;}
 #wrapper #rightPanel #history {display:inline-block; width: 100%} 
+#wrapper #rightPanel #jobs td.hidden {display:none; width:100%;}
+#wrapper #rightPanel #jobs td.hidden .jobdetails {width:20%; float:left;}
+#wrapper #rightPanel #jobs td.hidden .jobhistory {width:80%;overflow-y:auto;float:right;max-height:400px;}
+#wrapper #rightPanel #jobs td.hidden .jobhistory th {text-align:left;}
+#wrapper #rightPanel #jobs div.record_action_forms {min-width:350px;}
+#wrapper #rightPanel #jobs td {min-width:110px; margin:10px;} 
 #wrapper #rightPanel #footer {clear:both;display:block;padding 5px;}
 #wrapper #leftPanel {float:left;width:15%;}
 #wrapper #leftPanel #menu {width:170px;vertical-align:top;padding 5px;}
