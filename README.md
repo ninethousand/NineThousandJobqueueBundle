@@ -109,6 +109,10 @@ To access your queues from the controller Simply call the jobqueue.control servi
             ));
         }
     }
+    
+#### To create a new Job ####
+Here is a gist that shows the code api of how to create a new job
+https://gist.github.com/1154182
 
 ### View ###
 All Queues should implement PHPs \Iterator interface, so displaying the queue information in your template is simply a matter of iterating over them in a foreach loop:

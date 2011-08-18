@@ -23,8 +23,6 @@ class NineThousandJobqueueExtension extends Extension
         $container->setParameter('jobqueue.adapter.class', $config['adapter']['class']);
         $container->setParameter('jobqueue.adapter.options', $config['adapter']['options']);
         $container->setParameter('jobqueue.ui.options', $config['ui']);
-        
-        
     }
 
     /**
