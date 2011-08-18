@@ -57,10 +57,10 @@ app/config.yml
         adapter:
             class:  NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Queue\DoctrineQueueAdapter
             options:
-                job_entity_class:   NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job
-                job_adapter_class:  NineThousand\Bundle\NineThousandJobqueueBundle\Vendor\Doctrine\Adapter\Job\Symfony2DoctrineJobAdapter
+                job_entity_class:       NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job
+                job_adapter_class:      NineThousand\Bundle\NineThousandJobqueueBundle\Vendor\Doctrine\Adapter\Job\Symfony2DoctrineJobAdapter
                 history_entity_class:   NineThousand\Bundle\NineThousandJobqueueBundle\Entity\History
-                history_adapter_class:  NineThousand\Jobqueue\Vendor\Doctrine\Adapter\History\\DoctrineHistoryAdapter
+                history_adapter_class:  NineThousand\Jobqueue\Vendor\Doctrine\Adapter\History\DoctrineHistoryAdapter
                 log_adapter_class:      NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Log\MonologAdapter
                 jobcontrol:
                     type_mapping:
