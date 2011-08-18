@@ -49,34 +49,24 @@ By Default, Jobqueue has a sensible configuration which will use Doctrine ORM an
 
 app/config.yml
 
-    #Jobqueue Configuration
-    jobqueue:
-    
-        #The control service configuration
-        control:
-            class:  "NineThousand\Jobqueue\Service\JobqueueControl"
-
-        #Job component configuration
+    nine_thousand_jobqueue:
         job:
-            class:  "NineThousand\Jobqueue\Job\StandardJob"
-
-        #adapter configuration includes job adapter and job controll mapping
+            class:  NineThousand\Jobqueue\Job\StandardJob
+        control:
+            class:  NineThousand\Jobqueue\Service\JobqueueControl
         adapter:
-            class:  "NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Queue\DoctrineQueueAdapter"
+            class:  NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Queue\DoctrineQueueAdapter
             options:
-                job_entity_class:       "NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job"
-                job_adapter_class:      "NineThousand\Bundle\NineThousandJobqueueBundle\Vendor\Doctrine\Adapter\Job\DoctrineJobAdapter"
-                history_entity_class:   "NineThousand\Bundle\NineThousandJobqueueBundle\Entity\History"
-                history_adapter_class:  "NineThousand\Jobqueue\Vendor\Doctrine\Adapter\History\DoctrineHistoryAdapter"
-                log_adapter_class:      "NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Log\MonologAdapter"
+                job_entity_class:       NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job
+                job_adapter_class:      NineThousand\Bundle\NineThousandJobqueueBundle\Vendor\Doctrine\Adapter\Job\Symfony2DoctrineJobAdapter
+                history_entity_class:   NineThousand\Bundle\NineThousandJobqueueBundle\Entity\History
+                history_adapter_class:  NineThousand\Jobqueue\Vendor\Doctrine\Adapter\History\DoctrineHistoryAdapter
+                log_adapter_class:      NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Log\MonologAdapter
                 jobcontrol:
                     type_mapping:
-                        SymfonyConsoleJobControl:   "NineThousand\Jobqueue\Vendor\Symfony2\Adapter\Job\Control\Symfony2ConsoleJobControl"
-                        
-        #ui configuration
+                        SymfonyConsoleJobControl:   NineThousand\Jobqueue\Vendor\Symfony2\Adapter\Job\Control\Symfony2ConsoleJobControl
         ui:
-        options:
-            pagnation:
+            pagination:
                 limit:          40
                 pages_before:   5
                 pages_after:    5
