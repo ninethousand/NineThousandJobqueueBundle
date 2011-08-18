@@ -10,50 +10,21 @@ use Symfony\Component\Config\FileLocator;
 class NineThousandJobqueueExtension extends Extension
 {
 
-    public function load(Array $config, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container)
     {
-        if (! $container->hasDefinition('jobqueue')) {
-            $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-            $loader->load('jobqueue.xml');
-        } 
-        
-        $this->mergeExternalConfig($config, $container, 'jobqueue');
-        
-    }
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('jobqueue.xml');
 
-    private function mergeExternalConfig($config, ContainerBuilder $container, $alias)
-    {
-        $mergedConfig = array();
-
-        foreach ($config as $cnf)
-        {
-            $mergedConfig = array_merge($mergedConfig, $cnf);
-        }
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
         
-        if (isset($mergedConfig['adapter']['options']))
-        {
-            $container->setParameter($alias.'.adapter.options', $mergedConfig['adapter']['options']);
-        }
+        $container->setParameter('jobqueue.job.class', $config['job']['class']);
+        $container->setParameter('jobqueue.control.class', $config['control']['class']);
+        $container->setParameter('jobqueue.adapter.class', $config['adapter']['class']);
+        $container->setParameter('jobqueue.adapter.options', $config['adapter']['options']);
+        $container->setParameter('jobqueue.ui.options', $config['ui']);
         
-        if (isset($mergedConfig['control']['class']))
-        {
-            $container->setParameter($alias.'.control.class', $mergedConfig['control']['class']);
-        }
         
-        if (isset($mergedConfig['job']['class']))
-        {
-            $container->setParameter($alias.'.job.class', $mergedConfig['job']['class']);
-        }
-        
-        if (isset($mergedConfig['adapter']['class']))
-        {
-            $container->setParameter($alias.'.adapter.class', $mergedConfig['adapter']['class']);
-        }
-        
-        if (isset($mergedConfig['ui']['options']))
-        {
-            $container->setParameter($alias.'.ui.options', $mergedConfig['ui']['options']);
-        }
     }
 
     /**
@@ -68,7 +39,7 @@ class NineThousandJobqueueExtension extends Extension
 
     public function getNamespace()
     {
-        return 'http://www.collegedegrees.com/schema/dic/rank-tracker';
+        return 'http://www.ninethousand.org/schema/dic/jobqueue';
     }
 
 }
