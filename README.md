@@ -1,5 +1,8 @@
 #JobqueueBundle#
 
+### * NEW And Improved cron-expression component by Michael Dowling * ###
+library: https://github.com/mtdowling/cron-expression
+
 ##Overview##
 This bundle enables the use of the [ninethousand jobqueue](https://github.com/ninethousand/ninethousand-jobqueue "ninethousand-jobqueue") component library with a Symfony2 Project.
 
@@ -20,7 +23,18 @@ add the bundle and jobqueue component to your deps configuration
 
     [ninethousand-jobqueue]
         git=http://github.com/ninethousand/ninethousand-jobqueue.git
+        
+*I recommend adding Michael Downling's Cron component to your project. The ninethousand-jobqueue component has a sub-set of Michael's cron library, but in order to benefit from any updates he makes, it would be best to load the library from his repository.*
 
+    [cron-expression]
+        git=http://github.com/mtdowling/cron-expression.git
+        
+*in app/config.yml*
+
+    nine_thousand_jobqueue:
+        adapter:
+            options:
+                cron_class: Cron\CronExpression
 
 ### autoload.php ###
 Add the following to your autoload.php file:
@@ -28,6 +42,8 @@ Add the following to your autoload.php file:
     $loader->registerNamespaces(array(
         //...
         'NineThousand'     => array(__DIR__.'/../vendor/ninethousand-jobqueue/lib', __DIR__.'/../vendor/bundles'),
+        // for mtdowlings cron library
+        'Cron'             => array(__DIR__.'/../vendor/cron-expression/src'),
     ));
 
 ### appKernel.php ###
@@ -57,6 +73,7 @@ app/config.yml
         adapter:
             class:  NineThousand\Jobqueue\Vendor\Doctrine\Adapter\Queue\DoctrineQueueAdapter
             options:
+                cron_class:             NineThousand\Jobqueue\Util\Cron\CronExpression
                 job_entity_class:       NineThousand\Bundle\NineThousandJobqueueBundle\Entity\Job
                 job_adapter_class:      NineThousand\Bundle\NineThousandJobqueueBundle\Vendor\Doctrine\Adapter\Job\Symfony2DoctrineJobAdapter
                 history_entity_class:   NineThousand\Bundle\NineThousandJobqueueBundle\Entity\History

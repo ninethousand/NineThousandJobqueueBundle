@@ -33,6 +33,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('options')
                             ->addDefaultsIfNotSet()
                             ->children()
+                                ->scalarNode('cron_class')->defaultValue('NineThousand\\Jobqueue\\Util\\Cron\\CronExpression')->end()
                                 ->scalarNode('job_entity_class')->defaultValue('NineThousand\\Bundle\\NineThousandJobqueueBundle\\Entity\\Job')->end()
                                 ->scalarNode('job_adapter_class')->defaultValue('NineThousand\\Bundle\\NineThousandJobqueueBundle\\Vendor\\Doctrine\\Adapter\\Job\\Symfony2DoctrineJobAdapter')->end()
                                 ->scalarNode('history_entity_class')->defaultValue('NineThousand\\Bundle\\NineThousandJobqueueBundle\\Entity\\History')->end()

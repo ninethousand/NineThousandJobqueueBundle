@@ -97,12 +97,12 @@ class Symfony2DoctrineJobAdapter implements JobAdapterInterface
         $entity->setParent($this->_jobEntity->getId());
         $this->_em->persist($entity);
         $this->_em->flush();
-        
+
         //instantiate duplicated job adapter and set params, args, tags
         $jobAdapter = new self($this->_options, $entity, $this->_em, $this->_logger);
-        if ($params = $this->getParams()) $jobAdapter->setParams($params);
-        if ($args = $this->getArgs()) $jobAdapter->setArgs($args);
-        if ($tags = $this->getTags()) $jobAdapter->setTags($tags);
+        if (count($params = $this->getParams())) $jobAdapter->setParams($params);
+        if (count($args = $this->getArgs())) $jobAdapter->setArgs($args);
+        if (count($tags = $this->getTags())) $jobAdapter->setTags($tags);
         
         return $jobAdapter;
     }
