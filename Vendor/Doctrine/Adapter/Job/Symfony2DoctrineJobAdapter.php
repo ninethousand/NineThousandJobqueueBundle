@@ -374,7 +374,7 @@ class Symfony2DoctrineJobAdapter implements JobAdapterInterface
         foreach($args as $key => $value) {
             $arg = new Arg;
             $arg->setValue($value);
-            $arg->setJob($this->getId());
+            $arg->setJob($this->_jobEntity);
             $arg->setActive(1);
             $this->_em->persist($arg);
             $this->_em->flush();
